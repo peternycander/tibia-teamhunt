@@ -1,4 +1,8 @@
 {
+  "themePurple": "#c393df",
+  "errorRed": "#e85b5f",
   "backgroundGray": "#eee",
-  "black": "#222222"
+  "borderGray": "rgba(0,0,0,0.12)",
+  "black": "#222222",
+  "okGreen": "#369e36"
 }
