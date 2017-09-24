@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Header from 'components/Header';
-import WorldPicker from 'components/WorldPicker';
+import WorldPicker from 'components/WorldPicker/Container';
 import './App.css';
 import styled from 'styled-components';
 
@@ -11,33 +11,16 @@ const Body = styled.div`
   align-items: center;
 `;
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      world: 'Antica',
-      validWorld: true
-    };
-    this.changeWorld = this.changeWorld.bind(this);
-  }
-  changeWorld({world, valid}) {
-    this.setState({world, validWorld: valid});
-  }
-  render() {
-    return (
-      <div>
-        <Header>Tibia Teamhunt</Header>
-        <Body>
-          <h3>Pick your world</h3>
-          <WorldPicker
-            changeWorld={this.changeWorld}
-            selectedWorld={this.state.world}
-            validWorld={this.state.validWorld}
-          />
-        </Body>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div>
+      <Header>Tibia Teamhunt</Header>
+      <Body>
+        <h3>Pick your world</h3>
+        <WorldPicker />
+      </Body>
+    </div>
+  );
 }
 
 export default App;
