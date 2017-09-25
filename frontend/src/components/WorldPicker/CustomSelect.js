@@ -39,6 +39,7 @@ export default class CustomSelect extends Component {
       this.props.onUp();
     } else if (e.key === 'Enter') {
       this.props.selectHighlighted();
+      this.input.blur();
     }
   }
 

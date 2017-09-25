@@ -30,6 +30,9 @@ export default function(state = defaultState, action = {type: ''}) {
       return state.set('worldListVisible', false);
     }
     case 'HIGHLIGHT_PREVIOUS_WORLD': {
+      if (!state.get('worldListVisible')) {
+        return state;
+      }
       return state.set('highlightedIndex', Math.max(state.get('highlightedIndex') - 1, 0));
     }
     case 'SELECT_HIGHLIGHTED_WORLD': {
@@ -39,6 +42,9 @@ export default function(state = defaultState, action = {type: ''}) {
         .set('selectedWorld', state.getIn(['list', state.get('highlightedIndex')]));
     }
     case 'HIGHLIGHT_NEXT_WORLD': {
+      if (!state.get('worldListVisible')) {
+        return state;
+      }
       return state.set(
         'highlightedIndex',
         Math.min(state.get('highlightedIndex') + 1, state.get('list').size - 1)
