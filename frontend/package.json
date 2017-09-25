@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3050",
   "dependencies": {
     "immutable": "^3.8.1",
     "jest-cli": "^21.1.0",
@@ -12,6 +13,7 @@
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.13",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "styled-components": "^2.1.2"
   },
   "scripts": {

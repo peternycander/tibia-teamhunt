@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import colors from 'globals/colors';
 
 export default styled.div`
+  background-color: ${props => (props.selected ? colors.backgroundGray : 'white')};
   font-size: 2px;
   padding: 5px;
   font-size: 14px;

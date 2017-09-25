@@ -1,24 +1,9 @@
 {
   "extends": "react-app",
   "rules": {
-    "react/jsx-indent": [
-      "error",
-      2
-    ],
-    "react/jsx-indent-props": [
-      "error",
-      2
-    ],
-    "newline-per-chained-call": [
-      "error",
-      {
-        "ignoreChainWithDepth": 1
-      }
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-indent-props": ["error", 2],
+    "semi": ["error", "always"]
   }
   // {
   //   "env": {
@@ -96,7 +81,7 @@
   //       "after": true
   //     }],
   //     "quotes": ["error", "single"],
-  //     
+  //
   //   }
   // }
 }
