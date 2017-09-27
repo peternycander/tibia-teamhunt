@@ -1,6 +1,7 @@
 export default {
   changeWorld,
   loadWorlds,
+  loadPlayers,
   highlightNextWorld,
   highlightPreviousWorld,
   showWorldList,
@@ -23,8 +24,15 @@ export function loadWorlds() {
     let worlds;
     try {
       let response = await fetch('/worlds');
+      if (!response.ok) {
+        return dispatch({
+          type: 'LOAD_WORLDS_ERROR',
+          payload: 'Cannot connect to tibia.com'
+        });
+      }
       worlds = await response.json();
     } catch (error) {
+      console.error(error);
       return dispatch({
         type: 'LOAD_WORLDS_ERROR'
       });
@@ -32,6 +40,33 @@ export function loadWorlds() {
     dispatch({
       type: 'LOAD_WORLDS_DONE',
       payload: worlds
+    });
+  };
+}
+export function loadPlayers(world) {
+  return async dispatch => {
+    dispatch({
+      type: 'LOAD_PLAYERS_START'
+    });
+    let players;
+    try {
+      let response = await fetch(`/worlds/${world}`);
+      if (!response.ok) {
+        return dispatch({
+          type: 'LOAD_PLAYERS_ERROR',
+          payload: 'Cannot connect to tibia.com'
+        });
+      }
+      players = await response.json();
+    } catch (error) {
+      console.error(error);
+      return dispatch({
+        type: 'LOAD_PLAYERS_ERROR'
+      });
+    }
+    dispatch({
+      type: 'LOAD_PLAYERS_DONE',
+      payload: players
     });
   };
 }

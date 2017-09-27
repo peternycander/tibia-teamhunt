@@ -6,10 +6,12 @@
   "dependencies": {
     "immutable": "^3.8.1",
     "jest-cli": "^21.1.0",
+    "loaders.css": "^0.1.2",
     "open-iconic": "^1.1.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-inlinesvg": "^0.6.2",
+    "react-loaders": "^2.5.0",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.13",
     "redux": "^3.7.2",

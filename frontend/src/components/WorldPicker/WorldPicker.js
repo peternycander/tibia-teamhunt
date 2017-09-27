@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import CustomOption from './styled/CustomOption';
 import CustomSelect from './CustomSelect';
+import Error from 'components/Error';
+import TryAgainButton from 'components/TryAgainButton';
+import Loader from 'components/Loader';
 
 export default class WorldPicker extends Component {
   componentDidMount() {
@@ -18,8 +21,21 @@ export default class WorldPicker extends Component {
       highlightPreviousWorld,
       showWorldList,
       hideWorldList,
-      worldListVisible
+      error,
+      loadWorlds,
+      worldListVisible,
+      loading
     } = this.props;
+    if (error) {
+      return (
+        <div>
+          <Error>{error}</Error>
+          <TryAgainButton onClick={loadWorlds}>Try again</TryAgainButton>
+        </div>
+      );
+    } else if (loading) {
+      return <Loader />;
+    }
     const worldOptions = worlds.map((world, i) => (
       <CustomOption
         key={world}

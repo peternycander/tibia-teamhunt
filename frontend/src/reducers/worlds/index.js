@@ -7,7 +7,8 @@ const defaultState = fromJS({
   selectedWorld: 'Antica',
   validWorld: true,
   highlightedIndex: -1,
-  worldListVisible: false
+  worldListVisible: false,
+  loading: false
 });
 
 export default function(state = defaultState, action = {type: ''}) {
@@ -50,12 +51,19 @@ export default function(state = defaultState, action = {type: ''}) {
         Math.min(state.get('highlightedIndex') + 1, state.get('list').size - 1)
       );
     }
+    case 'LOAD_WORLDS_START': {
+      return state.set('loading', true).set('error', '');
+    }
+    case 'LOAD_WORLDS_ERROR': {
+      return state.set('loading', false).set('error', action.payload || '');
+    }
     case 'LOAD_WORLDS_DONE': {
       const listOfWorlds = fromJS(Object.values(action.payload));
       return state
         .set('map', fromJS(action.payload))
         .set('list', listOfWorlds)
-        .set('unfilteredList', listOfWorlds);
+        .set('unfilteredList', listOfWorlds)
+        .set('loading', false);
     }
     default: {
       return state;

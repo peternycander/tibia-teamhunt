@@ -8,7 +8,9 @@ function mapStateToProps(state) {
     selectedWorld: state.getIn(['worlds', 'selectedWorld']),
     validWorld: state.getIn(['worlds', 'validWorld']),
     worldListVisible: state.getIn(['worlds', 'worldListVisible']),
-    highlightedIndex: state.getIn(['worlds', 'highlightedIndex'])
+    highlightedIndex: state.getIn(['worlds', 'highlightedIndex']),
+    error: state.getIn(['worlds', 'error']),
+    loading: state.getIn(['worlds', 'loading'])
   };
 }
 

@@ -9,30 +9,31 @@ import Isvg from 'react-inlinesvg';
 export default class CustomSelect extends Component {
   constructor() {
     super();
-    this.onBlur = this.onBlur.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onDown = this.onDown.bind(this);
+    this.hideWorldList = this.hideWorldList.bind(this);
+    this.showWorldList = this.showWorldList.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
   componentDidMount() {
-    this.input.addEventListener('keydown', this.onDown);
+    this.input.addEventListener('keydown', this.handleKeyPress);
   }
   componentWillUnmount() {
-    this.input.removeEventListener('keydown', this.onDown);
+    this.input.removeEventListener('keydown', this.handleKeyPress);
   }
 
   componentDidUpdate(prevProps) {
     const highlightedIndex = this.props.highlightedIndex;
     if (prevProps.highlightedIndex !== highlightedIndex) {
-      const worldYPos = highlightedIndex * 28;
-      if (worldYPos + 28 >= this.worldList.scrollTop + this.worldList.offsetHeight) {
-        this.worldList.scrollTop += 28;
+      const elementHeight = 28;
+      const worldYPos = highlightedIndex * elementHeight;
+      if (worldYPos + elementHeight >= this.worldList.scrollTop + this.worldList.offsetHeight) {
+        this.worldList.scrollTop += elementHeight;
       } else if (worldYPos < this.worldList.scrollTop) {
-        this.worldList.scrollTop -= 28;
+        this.worldList.scrollTop -= elementHeight;
       }
     }
   }
 
-  onDown(e) {
+  handleKeyPress(e) {
     if (e.key === 'ArrowDown') {
       this.props.onDown();
     } else if (e.key === 'ArrowUp') {
@@ -43,27 +44,27 @@ export default class CustomSelect extends Component {
     }
   }
 
-  onBlur(e) {
+  hideWorldList(e) {
     e.preventDefault();
     this.props.hideWorldList();
   }
-  onFocus() {
+  showWorldList() {
     this.props.onChange('');
     this.props.showWorldList();
   }
   render() {
     const {validWorld, value, onChange, children, worldListVisible} = this.props;
     return (
-      <SelectWrapper onSubmit={this.onBlur}>
+      <SelectWrapper onSubmit={this.hideWorldList}>
         <InputField
           value={value}
           onChange={e => {
-            this.onFocus();
+            this.showWorldList();
             onChange(e.target.value);
           }}
           validWorld={validWorld}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
+          onFocus={this.showWorldList}
+          onBlur={this.hideWorldList}
           innerRef={e => (this.input = e)}
         />
         <Isvg src={selectIconPath} wrapper={props => <SelectIcon {...props} />} />

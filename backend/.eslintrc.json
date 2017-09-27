@@ -13,9 +13,7 @@
     "sourceType": "module"
   },
   "globals": {},
-  "plugins": ["jasmine"],
   "rules": {
-    "jasmine/no-focused-tests": 2,
     "indent": [
       "error",
       2,
@@ -33,6 +31,7 @@
     "semi": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
     "space-in-parens": ["error", "never"],
-    "no-console": ["warn", {"allow": ["warn", "error"]}]
+    "no-console": "off",
+    "no-undef": "error"
   }
 }
