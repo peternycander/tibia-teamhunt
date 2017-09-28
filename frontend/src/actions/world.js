@@ -66,7 +66,10 @@ export function loadPlayers(world) {
     }
     dispatch({
       type: 'LOAD_PLAYERS_DONE',
-      payload: players
+      payload: {
+        list: players,
+        world
+      }
     });
   };
 }

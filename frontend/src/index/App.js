@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from 'components/Header';
 import WorldPicker from 'components/WorldPicker/Container';
+import PlayerList from 'components/PlayerList/Container';
 import './App.css';
 import styled from 'styled-components';
 
@@ -18,6 +19,7 @@ function App() {
       <Body>
         <h3>Pick your world</h3>
         <WorldPicker />
+        <PlayerList />
       </Body>
     </div>
   );

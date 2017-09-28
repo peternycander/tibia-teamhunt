@@ -8,6 +8,7 @@ const defaultState = fromJS({
   validWorld: true,
   highlightedIndex: -1,
   worldListVisible: false,
+  error: '',
   loading: false
 });
 
