@@ -19,7 +19,7 @@ export function changeWorld(world = '') {
 export function loadWorlds() {
   return async dispatch => {
     dispatch({
-      type: 'LOAD_WORLDS_START'
+      type: 'LOAD_WORLDS_STARTED'
     });
     let worlds;
     try {
@@ -46,7 +46,7 @@ export function loadWorlds() {
 export function loadPlayers(world) {
   return async dispatch => {
     dispatch({
-      type: 'LOAD_PLAYERS_START'
+      type: 'LOAD_PLAYERS_STARTED'
     });
     let players;
     try {

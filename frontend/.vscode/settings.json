@@ -1,4 +1,5 @@
 {
+  "editor.formatOnSave": true,
   "search.exclude": {
     "# See https://help.github.com/ignore-files/ for more about ignoring files.": true,
     "# dependencies": true,
