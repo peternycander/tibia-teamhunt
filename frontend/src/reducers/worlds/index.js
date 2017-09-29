@@ -52,7 +52,7 @@ export default function(state = defaultState, action = {type: ''}) {
         Math.min(state.get('highlightedIndex') + 1, state.get('list').size - 1)
       );
     }
-    case 'LOAD_WORLDS_START': {
+    case 'LOAD_WORLDS_STARTED': {
       return state.set('loading', true).set('error', '');
     }
     case 'LOAD_WORLDS_ERROR': {

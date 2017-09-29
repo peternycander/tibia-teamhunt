@@ -3,7 +3,11 @@ import {fromJS} from 'immutable';
 const defaultState = fromJS({
   worlds: {},
   error: '',
-  loading: false
+  loading: false,
+  shareRange: {
+    min: 67,
+    max: 150
+  }
 });
 
 export default function(state = defaultState, action = {type: ''}) {
@@ -26,6 +30,12 @@ export default function(state = defaultState, action = {type: ''}) {
     }
     case 'LOAD_PLAYERS_STARTED': {
       return state.set('loading', true);
+    }
+    case 'SET_CURRENT_PLAYER': {
+      const {level} = action.payload;
+      const min = Math.ceil(level * (2 / 3));
+      const max = Math.ceil(level * (3 / 2));
+      return state.set('shareRange', fromJS({min, max}));
     }
     default: {
       return state;

@@ -31,6 +31,26 @@ it('sets loading=false on LOAD_PLAYERS_ERROR', () => {
   expect(result.get('loading')).toBe(false);
 });
 
+it('updates shareRange on SET_CURRENT_PLAYER', () => {
+  const action = {
+    type: 'SET_CURRENT_PLAYER',
+    payload: {
+      level: 201
+    }
+  };
+  const state = reducer().set(
+    'shareRange',
+    fromJS({
+      min: 0,
+      max: 2000
+    })
+  );
+  const result = reducer(state, action);
+
+  expect(result.getIn(['shareRange', 'min'])).toBe(134);
+  expect(result.getIn(['shareRange', 'max'])).toBe(302);
+});
+
 it('sets loading=true on LOAD_PLAYERS_STARTED', () => {
   const action = {
     type: 'LOAD_PLAYERS_STARTED'

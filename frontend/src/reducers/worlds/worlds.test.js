@@ -206,9 +206,9 @@ it('sets error to empty string if payload of LOAD_WORLDS_ERROR is undefined', ()
   expect(result.get('error')).toEqual('');
 });
 
-it('sets loading=true on LOAD_WORLDS_START', () => {
+it('sets loading=true on LOAD_WORLDS_STARTED', () => {
   const action = {
-    type: 'LOAD_WORLDS_START'
+    type: 'LOAD_WORLDS_STARTED'
   };
   const state = reducer().set('loading', false);
   const result = reducer(state, action);
@@ -216,9 +216,9 @@ it('sets loading=true on LOAD_WORLDS_START', () => {
   expect(result.get('loading')).toBe(true);
 });
 
-it('resets error on LOAD_WORLDS_START', () => {
+it('resets error on LOAD_WORLDS_STARTED', () => {
   const action = {
-    type: 'LOAD_WORLDS_START'
+    type: 'LOAD_WORLDS_STARTED'
   };
   const state = reducer().set('error', 'error');
   const result = reducer(state, action);
