@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import PlayerList from './PlayerList';
 import {loadPlayers} from 'actions/world';
+import {Map} from 'immutable';
 
 function mapStateToProps(state) {
   const world = state.getIn(['worlds', 'validWorld'])
@@ -19,7 +20,11 @@ function mapStateToProps(state) {
     druids,
     paladins,
     sorcerers,
-    shareRange: state.getIn(['team', 'shareRange'])
+    shareRange: state.getIn(['team', 'shareRange']),
+    haveDruid: state.getIn(['team', 'druid']) !== Map(),
+    haveSorcerer: state.getIn(['team', 'sorcerer']) !== Map(),
+    havePaladin: state.getIn(['team', 'paladin']) !== Map(),
+    haveKnight: state.getIn(['team', 'knight']) !== Map()
   };
 }
 

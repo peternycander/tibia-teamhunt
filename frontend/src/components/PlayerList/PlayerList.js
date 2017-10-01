@@ -58,7 +58,11 @@ export default class PlayerList extends Component {
       error,
       loadPlayers,
       loading,
-      shareRange
+      shareRange,
+      haveDruid,
+      havePaladin,
+      haveKnight,
+      haveSorcerer
     } = this.props;
     if (error) {
       return (
@@ -77,23 +81,27 @@ export default class PlayerList extends Component {
     const knightList = knights.map(getDomPlayer);
     const paladinList = paladins.map(getDomPlayer);
     const sorcererList = sorcerers.map(getDomPlayer);
+    const minimizeDruids = this.state.minimizeDruids || haveDruid;
+    const minimizePaladins = this.state.minimizePaladins || havePaladin;
+    const minimizeKnights = this.state.minimizeKnights || haveKnight;
+    const minimizeSorcerers = this.state.minimizeSorcerers || haveSorcerer;
     return (
       <VocationGrid>
-        <div>
+        <div style={minimizeDruids ? {display: 'none'} : {}}>
           <h4 onClick={() => this.toggleMinimized('druids')}>Druids</h4>
-          <div style={this.state.minimizeDruids ? {display: 'none'} : {}}>{druidList}</div>
+          <div>{druidList}</div>
         </div>
-        <div>
+        <div style={minimizeKnights ? {display: 'none'} : {}}>
           <h4 onClick={() => this.toggleMinimized('knights')}>Knights</h4>
-          <div style={this.state.minimizeKnights ? {display: 'none'} : {}}>{knightList}</div>
+          <div>{knightList}</div>
         </div>
-        <div>
+        <div style={minimizePaladins ? {display: 'none'} : {}}>
           <h4 onClick={() => this.toggleMinimized('paladins')}>Paladins</h4>
-          <div style={this.state.minimizePaladins ? {display: 'none'} : {}}>{paladinList}</div>
+          <div>{paladinList}</div>
         </div>
-        <div>
+        <div style={minimizeSorcerers ? {display: 'none'} : {}}>
           <h4 onClick={() => this.toggleMinimized('sorcerers')}>Sorcerers</h4>
-          <div style={this.state.minimizeSorcerers ? {display: 'none'} : {}}>{sorcererList}</div>
+          <div>{sorcererList}</div>
         </div>
       </VocationGrid>
     );

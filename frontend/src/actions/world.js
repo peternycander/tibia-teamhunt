@@ -1,12 +1,7 @@
 export default {
   changeWorld,
   loadWorlds,
-  loadPlayers,
-  highlightNextWorld,
-  highlightPreviousWorld,
-  showWorldList,
-  hideWorldList,
-  selectHighlighted
+  loadPlayers
 };
 
 export function changeWorld(world = '') {
@@ -71,35 +66,5 @@ export function loadPlayers(world) {
         world
       }
     });
-  };
-}
-
-export function highlightNextWorld() {
-  return {
-    type: 'HIGHLIGHT_NEXT_WORLD'
-  };
-}
-
-export function highlightPreviousWorld() {
-  return {
-    type: 'HIGHLIGHT_PREVIOUS_WORLD'
-  };
-}
-
-export function showWorldList() {
-  return {
-    type: 'SHOW_WORLD_LIST'
-  };
-}
-
-export function hideWorldList() {
-  return {
-    type: 'HIDE_WORLD_LIST'
-  };
-}
-
-export function selectHighlighted() {
-  return {
-    type: 'SELECT_HIGHLIGHTED_WORLD'
   };
 }

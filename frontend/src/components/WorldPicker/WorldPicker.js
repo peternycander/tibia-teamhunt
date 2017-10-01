@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import CustomOption from './styled/CustomOption';
-import CustomSelect from './CustomSelect';
+import CustomSelect from 'components/CustomSelect';
 import Error from 'components/Error';
 import TryAgainButton from 'components/TryAgainButton';
 import Loader from 'components/Loader';
@@ -15,15 +14,8 @@ export default class WorldPicker extends Component {
       changeWorld,
       validWorld,
       worlds,
-      highlightNextWorld,
-      highlightedIndex,
-      selectHighlighted,
-      highlightPreviousWorld,
-      showWorldList,
-      hideWorldList,
       error,
       loadWorlds,
-      worldListVisible,
       loading
     } = this.props;
     if (error) {
@@ -36,30 +28,14 @@ export default class WorldPicker extends Component {
     } else if (loading) {
       return <Loader />;
     }
-    const worldOptions = worlds.map((world, i) => (
-      <CustomOption
-        key={world}
-        value={world}
-        onMouseDown={() => changeWorld(world)}
-        selected={highlightedIndex === i}
-      >
-        {world}
-      </CustomOption>
-    ));
     return (
       <CustomSelect
         value={selectedWorld}
-        validWorld={validWorld}
+        validSelection={validWorld}
         onChange={changeWorld}
-        onUp={highlightPreviousWorld}
-        onDown={highlightNextWorld}
-        worldListVisible={worldListVisible}
-        selectHighlighted={selectHighlighted}
-        showWorldList={showWorldList}
-        hideWorldList={hideWorldList}
-        highlightedIndex={highlightedIndex}
+        writable
       >
-        {worldOptions}
+        {worlds}
       </CustomSelect>
     );
   }

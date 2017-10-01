@@ -7,5 +7,6 @@ export default styled.div`
   padding: 4px;
   border-radius: 2px;
   margin-bottom: 2px;
+  font-size: 11px;
   background-color: ${props => (props.sharable ? colors.highlightGreen : 'inherit')};
 `;

@@ -27,9 +27,7 @@ it('sets currentPlayer on SET_CURRENT_PLAYER', () => {
 it('updates shareRange correct on level 201 on SET_CURRENT_PLAYER', () => {
   const action = {
     type: 'SET_CURRENT_PLAYER',
-    payload: {
-      level: 201
-    }
+    payload: player({level: 201})
   };
   const state = reducer().set(
     'shareRange',
@@ -47,9 +45,7 @@ it('updates shareRange correct on level 201 on SET_CURRENT_PLAYER', () => {
 it('sets shareRange correct on level 105 on SET_CURRENT_PLAYER', () => {
   const action = {
     type: 'SET_CURRENT_PLAYER',
-    payload: {
-      level: 105
-    }
+    payload: player({level: 105})
   };
   const state = reducer().set(
     'shareRange',

@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-
+import CustomSelect from 'components/CustomSelect';
+import {fromJS} from 'immutable';
+import PlayerInput from './styled/PlayerInput';
+const vocations = fromJS(['Knight', 'Paladin', 'Druid', 'Sorcerer']);
 export default class TeamBuilder extends Component {
   constructor(props) {
     super();
@@ -31,15 +34,12 @@ export default class TeamBuilder extends Component {
     const {level, vocation} = this.state.currentPlayer;
 
     return (
-      <div>
+      <PlayerInput>
         <input onChange={e => this.setCurrentPlayer({level: e.target.value})} value={level} />
-        <select onChange={e => this.setCurrentPlayer({vocation: e.target.value})} value={vocation}>
-          <option value='Knight'>Knight</option>
-          <option value='Paladin'>Paladin</option>
-          <option value='Druid'>Druid</option>
-          <option value='Paladin'>Paladin</option>
-        </select>
-      </div>
+        <CustomSelect onChange={e => this.setCurrentPlayer({vocation: e})} value={vocation}>
+          {vocations}
+        </CustomSelect>
+      </PlayerInput>
     );
   }
 }

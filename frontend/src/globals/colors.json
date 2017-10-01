@@ -5,5 +5,6 @@
   "borderGray": "rgba(0,0,0,0.12)",
   "black": "#222222",
   "okGreen": "#369e36",
-  "highlightGreen": "rgba(54, 157, 54, 0.2)"
+  "highlightGreen": "rgba(54, 157, 54, 0.2)",
+  "solidGray": "#b5b5b5"
 }

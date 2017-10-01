@@ -61,32 +61,35 @@ it('sets players to vocations in the world on LOAD_PLAYERS_DONE', () => {
   );
 });
 
-it('sorts players on LOAD_PLAYERS_DONE', () => {
+it('sorts players correctly on level 10 on LOAD_PLAYERS_DONE', () => {
   const knightA = player({name: 'a', level: 40, vocation: 'Knight'});
   const knightB = player({name: 'b', level: 15, vocation: 'Knight'});
   const eliteKnight = player({name: 'c', level: 20, vocation: 'Elite Knight'});
-  let action = {
+  const action = {
     type: 'LOAD_PLAYERS_DONE',
     payload: {
       list: [knightA, knightB, eliteKnight],
-      optimalLevel: 10,
       world: 'antica'
     }
   };
-  let state = reducer();
-  let result = reducer(state, action);
+  const state = reducer().set('optimalLevel', 10);
+  const result = reducer(state, action);
 
   expect(result.getIn(['onlineList', 'knights']).toJS()).toEqual([knightB, eliteKnight, knightA]);
+});
+it('sorts players correctly on level 28 on LOAD_PLAYERS_DONE', () => {
+  const knightA = player({name: 'a', level: 40, vocation: 'Knight'});
+  const knightB = player({name: 'b', level: 15, vocation: 'Knight'});
+  const eliteKnight = player({name: 'c', level: 20, vocation: 'Elite Knight'});
 
-  action = {
+  const action = {
     type: 'LOAD_PLAYERS_DONE',
     payload: {
       list: [knightA, knightB, eliteKnight],
-      optimalLevel: 28,
       world: 'antica'
     }
   };
-  state = reducer();
-  result = reducer(state, action);
+  const state = reducer().set('optimalLevel', 28);
+  const result = reducer(state, action);
   expect(result.getIn(['onlineList', 'knights']).toJS()).toEqual([eliteKnight, knightA, knightB]);
 });
