@@ -6,8 +6,13 @@ import Player from './styled/Player';
 import VocationGrid from './styled/VocationGrid';
 import {List} from 'immutable';
 
-const getDomPlayer = player => (
-  <Player key={player.get('name')}>
+const getDomPlayerFactory = shareRange => player => (
+  <Player
+    key={player.get('name')}
+    sharable={
+      player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')
+    }
+  >
     <span>{player.get('name')}</span>
     <span>{player.get('level')}</span>
   </Player>
@@ -46,14 +51,14 @@ export default class PlayerList extends Component {
 
   render() {
     const {
-      players = List(),
       druids = List(),
       knights = List(),
       paladins = List(),
       sorcerers = List(),
       error,
       loadPlayers,
-      loading
+      loading,
+      shareRange
     } = this.props;
     if (error) {
       return (
@@ -64,9 +69,10 @@ export default class PlayerList extends Component {
       );
     } else if (loading) {
       return <Loader />;
-    } else if (players === List()) {
+    } else if (!(druids.size || knights.size || paladins.size || sorcerers.size)) {
       return null;
     }
+    const getDomPlayer = getDomPlayerFactory(shareRange);
     const druidList = druids.map(getDomPlayer);
     const knightList = knights.map(getDomPlayer);
     const paladinList = paladins.map(getDomPlayer);

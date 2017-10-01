@@ -31,26 +31,6 @@ it('sets loading=false on LOAD_PLAYERS_ERROR', () => {
   expect(result.get('loading')).toBe(false);
 });
 
-it('updates shareRange on SET_CURRENT_PLAYER', () => {
-  const action = {
-    type: 'SET_CURRENT_PLAYER',
-    payload: {
-      level: 201
-    }
-  };
-  const state = reducer().set(
-    'shareRange',
-    fromJS({
-      min: 0,
-      max: 2000
-    })
-  );
-  const result = reducer(state, action);
-
-  expect(result.getIn(['shareRange', 'min'])).toBe(134);
-  expect(result.getIn(['shareRange', 'max'])).toBe(302);
-});
-
 it('sets loading=true on LOAD_PLAYERS_STARTED', () => {
   const action = {
     type: 'LOAD_PLAYERS_STARTED'
@@ -59,20 +39,6 @@ it('sets loading=true on LOAD_PLAYERS_STARTED', () => {
   const result = reducer(state, action);
 
   expect(result.get('loading')).toBe(true);
-});
-
-it('sets players from payload of LOAD_PLAYERS_DONE', () => {
-  const action = {
-    type: 'LOAD_PLAYERS_DONE',
-    payload: {
-      list: [player(), player(), player()],
-      world: 'antica'
-    }
-  };
-  const state = reducer();
-  const result = reducer(state, action);
-
-  expect(result.getIn(['worlds', 'antica', 'onlineList']).size).toBe(3);
 });
 
 it('sets players to vocations in the world on LOAD_PLAYERS_DONE', () => {
@@ -89,8 +55,38 @@ it('sets players to vocations in the world on LOAD_PLAYERS_DONE', () => {
   const state = reducer();
   const result = reducer(state, action);
 
-  expect(result.getIn(['worlds', 'antica', 'paladins'])).toEqual(fromJS([paladin]));
-  expect(result.getIn(['worlds', 'antica', 'knights']).toJS()).toEqual(
+  expect(result.getIn(['onlineList', 'paladins'])).toEqual(fromJS([paladin]));
+  expect(result.getIn(['onlineList', 'knights']).toJS()).toEqual(
     expect.arrayContaining([knight, eliteKnight])
   );
+});
+
+it('sorts players on LOAD_PLAYERS_DONE', () => {
+  const knightA = player({name: 'a', level: 40, vocation: 'Knight'});
+  const knightB = player({name: 'b', level: 15, vocation: 'Knight'});
+  const eliteKnight = player({name: 'c', level: 20, vocation: 'Elite Knight'});
+  let action = {
+    type: 'LOAD_PLAYERS_DONE',
+    payload: {
+      list: [knightA, knightB, eliteKnight],
+      optimalLevel: 10,
+      world: 'antica'
+    }
+  };
+  let state = reducer();
+  let result = reducer(state, action);
+
+  expect(result.getIn(['onlineList', 'knights']).toJS()).toEqual([knightB, eliteKnight, knightA]);
+
+  action = {
+    type: 'LOAD_PLAYERS_DONE',
+    payload: {
+      list: [knightA, knightB, eliteKnight],
+      optimalLevel: 28,
+      world: 'antica'
+    }
+  };
+  state = reducer();
+  result = reducer(state, action);
+  expect(result.getIn(['onlineList', 'knights']).toJS()).toEqual([eliteKnight, knightA, knightB]);
 });

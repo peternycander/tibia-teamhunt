@@ -1,29 +1,30 @@
 import {fromJS} from 'immutable';
+import {MIN_START_LEVEL, MAX_START_LEVEL} from 'reducers/team';
 
 const defaultState = fromJS({
-  worlds: {},
+  onlineList: {},
   error: '',
-  loading: false,
-  shareRange: {
-    min: 67,
-    max: 150
-  }
+  optimalLevel: MIN_START_LEVEL + (MAX_START_LEVEL - MIN_START_LEVEL) / 2,
+  loading: false
 });
+const levelComparatorFactory = level => (playerA, playerB) => {
+  return Math.abs(level - playerA.get('level')) - Math.abs(level - playerB.get('level'));
+};
 
 export default function(state = defaultState, action = {type: ''}) {
   switch (action.type) {
     case 'LOAD_PLAYERS_DONE': {
+      const levelComparator = levelComparatorFactory(state.get('optimalLevel'));
       const paladins = action.payload.list.filter(p => p.vocation.includes('Paladin'));
       const knights = action.payload.list.filter(p => p.vocation.includes('Knight'));
       const druids = action.payload.list.filter(p => p.vocation.includes('Druid'));
       const sorcerers = action.payload.list.filter(p => p.vocation.includes('Sorcerer'));
       return state
         .set('loading', false)
-        .setIn(['worlds', action.payload.world, 'onlineList'], fromJS(action.payload.list))
-        .setIn(['worlds', action.payload.world, 'paladins'], fromJS(paladins))
-        .setIn(['worlds', action.payload.world, 'knights'], fromJS(knights))
-        .setIn(['worlds', action.payload.world, 'druids'], fromJS(druids))
-        .setIn(['worlds', action.payload.world, 'sorcerers'], fromJS(sorcerers));
+        .setIn(['onlineList', 'paladins'], fromJS(paladins).sort(levelComparator))
+        .setIn(['onlineList', 'knights'], fromJS(knights).sort(levelComparator))
+        .setIn(['onlineList', 'druids'], fromJS(druids).sort(levelComparator))
+        .setIn(['onlineList', 'sorcerers'], fromJS(sorcerers).sort(levelComparator));
     }
     case 'LOAD_PLAYERS_ERROR': {
       return state.set('error', action.payload).set('loading', false);
@@ -33,9 +34,28 @@ export default function(state = defaultState, action = {type: ''}) {
     }
     case 'SET_CURRENT_PLAYER': {
       const {level} = action.payload;
-      const min = Math.ceil(level * (2 / 3));
-      const max = Math.ceil(level * (3 / 2));
-      return state.set('shareRange', fromJS({min, max}));
+      const min = Math.floor(level * (2 / 3));
+      const max = Math.floor(level * (3 / 2));
+      const optimalLevel = min + (max - min) / 2;
+      const levelComparator = levelComparatorFactory(optimalLevel);
+      return state
+        .set('optimalLevel', optimalLevel)
+        .setIn(
+          ['onlineList', 'paladins'],
+          state.getIn(['onlineList', 'paladins']).sort(levelComparator)
+        )
+        .setIn(
+          ['onlineList', 'knights'],
+          state.getIn(['onlineList', 'knights']).sort(levelComparator)
+        )
+        .setIn(
+          ['onlineList', 'druids'],
+          state.getIn(['onlineList', 'druids']).sort(levelComparator)
+        )
+        .setIn(
+          ['onlineList', 'sorcerers'],
+          state.getIn(['onlineList', 'sorcerers']).sort(levelComparator)
+        );
     }
     default: {
       return state;
