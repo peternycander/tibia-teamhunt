@@ -40,22 +40,10 @@ export default function(state = defaultState, action = {type: ''}) {
       const levelComparator = levelComparatorFactory(optimalLevel);
       return state
         .set('optimalLevel', optimalLevel)
-        .setIn(
-          ['onlineList', 'paladins'],
-          state.getIn(['onlineList', 'paladins']).sort(levelComparator)
-        )
-        .setIn(
-          ['onlineList', 'knights'],
-          state.getIn(['onlineList', 'knights']).sort(levelComparator)
-        )
-        .setIn(
-          ['onlineList', 'druids'],
-          state.getIn(['onlineList', 'druids']).sort(levelComparator)
-        )
-        .setIn(
-          ['onlineList', 'sorcerers'],
-          state.getIn(['onlineList', 'sorcerers']).sort(levelComparator)
-        );
+        .setIn(['onlineList', 'paladins'], state.getIn(['onlineList', 'paladins']).sort(levelComparator))
+        .setIn(['onlineList', 'knights'], state.getIn(['onlineList', 'knights']).sort(levelComparator))
+        .setIn(['onlineList', 'druids'], state.getIn(['onlineList', 'druids']).sort(levelComparator))
+        .setIn(['onlineList', 'sorcerers'], state.getIn(['onlineList', 'sorcerers']).sort(levelComparator));
     }
     default: {
       return state;

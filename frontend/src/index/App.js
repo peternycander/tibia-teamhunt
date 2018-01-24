@@ -1,16 +1,19 @@
 import React from 'react';
 import Header from 'components/Header';
-import WorldPicker from 'components/WorldPicker/Container';
-import TeamBuilder from 'components/TeamBuilder/Container';
-import PlayerList from 'components/PlayerList/Container';
+import WorldPicker from 'components/WorldPicker';
+import TeamBuilder from 'components/TeamBuilder';
+import PlayerList from 'components/PlayerList';
 import './App.css';
 import styled from 'styled-components';
 
 const Body = styled.div`
   padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 50rem;
+  margin: 0 auto;
+`;
+
+const SubHeader = styled.h3`
+  text-align: center;
 `;
 
 function App() {
@@ -18,7 +21,7 @@ function App() {
     <div>
       <Header>Tibia Teamhunt</Header>
       <Body>
-        <h3>Pick your world</h3>
+        <SubHeader>Pick your world</SubHeader>
         <WorldPicker />
         <TeamBuilder />
         <PlayerList />

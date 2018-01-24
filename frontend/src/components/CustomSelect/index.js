@@ -6,21 +6,27 @@ import CustomOption from './styled/CustomOption';
 import List from './styled/List';
 import selectIconPath from 'open-iconic/svg/elevator.svg';
 import Isvg from 'react-inlinesvg';
+import PropTypes from 'prop-types';
 
 export default class CustomSelect extends Component {
   constructor() {
     super();
-    this.hideList = this.hideList.bind(this);
-    this.showList = this.showList.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.onUp = this.onUp.bind(this);
-    this.onDown = this.onDown.bind(this);
-    this.selectHighlighted = this.selectHighlighted.bind(this);
     this.state = {
       highlightedIndex: -1,
       listVisible: false
     };
   }
+
+  static defaultProps = {
+    validSelection: true
+  };
+  static propTypes = {
+    validSelection: PropTypes.bool,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    children: PropTypes.object,
+    writable: PropTypes.bool
+  };
   componentDidMount() {
     this.input.addEventListener('keydown', this.handleKeyPress);
   }
@@ -41,23 +47,26 @@ export default class CustomSelect extends Component {
     }
   }
 
-  onDown() {
+  onDown = () => {
     this.setState({
       highlightedIndex: Math.min(this.state.highlightedIndex + 1, this.props.children.size - 1)
     });
-  }
+  };
 
-  onUp() {
+  onUp = () => {
     this.setState({
       highlightedIndex: Math.max(this.state.highlightedIndex - 1, 0)
     });
-  }
+  };
 
-  selectHighlighted() {
-    this.props.onChange(this.list.children[this.state.highlightedIndex].innerText);
-  }
+  selectHighlighted = () => {
+    const selectedChild = this.list.children[this.state.highlightedIndex] || {};
+    if (selectedChild.innerText) {
+      this.props.onChange(selectedChild.innerText);
+    }
+  };
 
-  handleKeyPress(e) {
+  handleKeyPress = e => {
     if (e.key === 'ArrowDown') {
       this.onDown();
     } else if (e.key === 'ArrowUp') {
@@ -66,33 +75,48 @@ export default class CustomSelect extends Component {
       this.selectHighlighted();
       this.input.blur();
     }
-  }
+  };
 
-  hideList(e) {
+  handleInputChange = e => {
+    const {writable, onChange, value} = this.props;
+    this.showList();
+    if (writable) {
+      onChange(e.target.value);
+    } else {
+      onChange(value);
+    }
+    this.setState({
+      highlightedIndex: 0
+    });
+  };
+
+  hideList = e => {
     e.preventDefault();
-    this.setState({
+    const stateDiff = {
       listVisible: false
-    });
-  }
+    };
+    if (this.props.validSelection) {
+      stateDiff.savedValue = '';
+    } else {
+      this.props.onChange(this.state.savedValue);
+    }
+    this.setState(stateDiff);
+  };
 
-  showList() {
-    const {onChange} = this.props;
-    onChange('');
+  showList = () => {
+    const {onChange, value} = this.props;
 
     this.setState({
-      listVisible: true
+      listVisible: true,
+      savedValue: value
     });
-  }
+    onChange('');
+  };
   render() {
     const {validSelection, value, onChange, children, writable} = this.props;
     const {highlightedIndex, listVisible} = this.state;
     const items = children.map((item, i) => (
-      <CustomOption
-        key={item}
-        value={item}
-        onMouseDown={() => onChange(item)}
-        selected={highlightedIndex === i}
-      >
+      <CustomOption key={item} value={item} onMouseDown={() => onChange(item)} selected={highlightedIndex === i}>
         {item}
       </CustomOption>
     ));
@@ -101,14 +125,7 @@ export default class CustomSelect extends Component {
       <SelectWrapper onSubmit={this.hideList}>
         <InputField
           value={value}
-          onChange={e => {
-            this.showList();
-            if (writable) {
-              onChange(e.target.value);
-            } else {
-              onChange(value);
-            }
-          }}
+          onChange={this.handleInputChange}
           validSelection={validSelection}
           writable={writable}
           onFocus={this.showList}

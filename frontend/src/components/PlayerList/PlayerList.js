@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import Error from 'components/Error';
 import TryAgainButton from 'components/TryAgainButton';
 import Loader from 'components/Loader';
-import Player from './styled/Player';
-import VocationGrid from './styled/VocationGrid';
+import {VocationGrid, Player} from './styled';
 import {List} from 'immutable';
 
 const getDomPlayerFactory = shareRange => player => (

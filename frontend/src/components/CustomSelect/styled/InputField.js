@@ -9,9 +9,10 @@ export default styled.input.attrs({
   border: 0;
   width: 100%;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 300;
-  text-align: center;
+  text-align: left;
+  padding-left: 0.8rem;
   transition: all 0.3s ease-in-out;
   background: ${props => {
     if (props.writable) {

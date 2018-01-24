@@ -140,7 +140,7 @@ async function listPlayers(req, res) {
   parser.write(response);
   parser.end();
   worldsCache[world.toLowerCase()] = {
-    timeout: moment().add(15, 'seconds'),
+    timeout: moment().add(1, 'minute'),
     players
   };
   res.send(players);

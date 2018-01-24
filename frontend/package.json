@@ -4,19 +4,20 @@
   "private": true,
   "proxy": "http://localhost:3050",
   "dependencies": {
-    "immutable": "^3.8.1",
-    "jest-cli": "^21.1.0",
+    "immutable": "^3.8.2",
+    "jest-cli": "^21.2.1",
     "loaders.css": "^0.1.2",
     "open-iconic": "^1.1.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "prop-types": "^15.6.0",
+    "react": "^16.0",
+    "react-dom": "^16.0",
     "react-inlinesvg": "^0.6.2",
-    "react-loaders": "^2.5.0",
+    "react-loaders": "^2.6.1",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.13",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "styled-components": "^2.1.2"
+    "styled-components": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -13,10 +13,9 @@ export default class TeamBuilder extends Component {
         level: 100
       }
     };
-    this.setCurrentPlayer = this.setCurrentPlayer.bind(this);
   }
 
-  setCurrentPlayer(values) {
+  setCurrentPlayer = values => {
     this.setState(
       {
         currentPlayer: {

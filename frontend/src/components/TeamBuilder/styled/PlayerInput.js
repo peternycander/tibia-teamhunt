@@ -4,6 +4,9 @@ import colors from 'globals/colors';
 export default styled.div`
   display: flex;
   width: 280px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto 0 auto;
   > * {
     flex: 1;
   }
@@ -12,7 +15,6 @@ export default styled.div`
     border-bottom: 1px solid ${colors.borderGray};
     border-radius: 0;
     outline: 0;
-    padding-top: 23px;
     text-align: center;
     height: 18px;
     max-width: 40px;

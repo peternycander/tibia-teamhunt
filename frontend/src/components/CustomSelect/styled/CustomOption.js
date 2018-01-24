@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import colors from 'globals/colors';
 
 export default styled.div`
-  background-color: ${props => (props.selected ? colors.backgroundGray : 'white')};
+  background-color: ${props =>
+    props.selected ? colors.backgroundGray : 'white'};
   font-size: 2px;
   padding: 5px;
-  font-size: 14px;
+  font-size: 0.85rem;
   display: flex;
   justify-content: center;
   font-weight: 300;
