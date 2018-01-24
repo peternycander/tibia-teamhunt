@@ -13,6 +13,6 @@ export const Player = styled.div`
 
 export const VocationGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   grid-column-gap: 20px;
 `;

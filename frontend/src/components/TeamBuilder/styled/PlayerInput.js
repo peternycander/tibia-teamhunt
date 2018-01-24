@@ -16,6 +16,7 @@ export default styled.div`
     border-radius: 0;
     outline: 0;
     text-align: center;
+    background: transparent;
     height: 18px;
     max-width: 40px;
     margin-right: 15px;

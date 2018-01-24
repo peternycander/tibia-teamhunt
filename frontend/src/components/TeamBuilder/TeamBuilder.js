@@ -27,14 +27,14 @@ export default class TeamBuilder extends Component {
         this.props.setCurrentPlayer(this.state.currentPlayer);
       }
     );
-  }
+  };
 
   render() {
     const {level, vocation} = this.state.currentPlayer;
 
     return (
       <PlayerInput>
-        <input onChange={e => this.setCurrentPlayer({level: e.target.value})} value={level} />
+        <input type='number' onChange={e => this.setCurrentPlayer({level: e.target.value})} value={level} />
         <CustomSelect onChange={e => this.setCurrentPlayer({vocation: e})} value={vocation}>
           {vocations}
         </CustomSelect>

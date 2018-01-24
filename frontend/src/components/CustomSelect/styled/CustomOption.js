@@ -2,18 +2,15 @@ import styled from 'styled-components';
 import colors from 'globals/colors';
 
 export default styled.div`
-  background-color: ${props =>
-    props.selected ? colors.backgroundGray : 'white'};
+  background-color: ${props => (props.selected ? colors.backgroundGray : 'white')};
   font-size: 2px;
-  padding: 5px;
+  padding: 8px 0 8px 12px;
   font-size: 0.85rem;
   display: flex;
-  justify-content: center;
   font-weight: 300;
   align-items: center;
-  border: 1px solid ${colors.borderGray};
-  border-width: 0 0 1px 0;
   cursor: pointer;
+  transition: all 0.3s;
   &:hover {
     background-color: ${colors.backgroundGray};
   }

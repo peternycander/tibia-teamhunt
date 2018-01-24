@@ -37,7 +37,7 @@ export default class CustomSelect extends Component {
   componentDidUpdate(prevProps, prevState) {
     const highlightedIndex = this.state.highlightedIndex;
     if (prevState.highlightedIndex !== highlightedIndex) {
-      const elementHeight = 28;
+      const elementHeight = this.list.children[highlightedIndex].getBoundingClientRect().height;
       const worldYPos = highlightedIndex * elementHeight;
       if (worldYPos + elementHeight >= this.list.scrollTop + this.list.offsetHeight) {
         this.list.scrollTop += elementHeight;
