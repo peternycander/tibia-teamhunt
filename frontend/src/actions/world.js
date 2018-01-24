@@ -56,7 +56,8 @@ export function loadPlayers(world) {
     } catch (error) {
       console.error(error);
       return dispatch({
-        type: 'LOAD_PLAYERS_ERROR'
+        type: 'LOAD_PLAYERS_ERROR',
+        payload: 'Cannot connect to tibia.com'
       });
     }
     dispatch({

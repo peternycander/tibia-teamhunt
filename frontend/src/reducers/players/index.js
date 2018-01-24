@@ -27,10 +27,13 @@ export default function(state = defaultState, action = {type: ''}) {
         .setIn(['onlineList', 'sorcerers'], fromJS(sorcerers).sort(levelComparator));
     }
     case 'LOAD_PLAYERS_ERROR': {
-      return state.set('error', action.payload).set('loading', false);
+      return state
+        .set('error', action.payload)
+        .set('loading', false)
+        .set('onlineList', fromJS({}));
     }
     case 'LOAD_PLAYERS_STARTED': {
-      return state.set('loading', true);
+      return state.set('loading', true).set('error', '');
     }
     case 'SET_CURRENT_PLAYER': {
       const {level} = action.payload;

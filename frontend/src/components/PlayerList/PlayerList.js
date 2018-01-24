@@ -8,9 +8,7 @@ import {List} from 'immutable';
 const getDomPlayerFactory = shareRange => player => (
   <Player
     key={player.get('name')}
-    sharable={
-      player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')
-    }
+    sharable={player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')}
   >
     <span>{player.get('name')}</span>
     <span>{player.get('level')}</span>
@@ -61,13 +59,14 @@ export default class PlayerList extends Component {
       haveDruid,
       havePaladin,
       haveKnight,
-      haveSorcerer
+      haveSorcerer,
+      world
     } = this.props;
     if (error) {
       return (
         <div>
           <Error>{error}</Error>
-          <TryAgainButton onClick={loadPlayers}>Try again</TryAgainButton>
+          <TryAgainButton onClick={() => loadPlayers(world)}>Try again</TryAgainButton>
         </div>
       );
     } else if (loading) {
