@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:3050",
   "dependencies": {
+    "clipboard-js": "^0.3.6",
     "immutable": "^3.8.2",
     "jest-cli": "^21.2.1",
     "loaders.css": "^0.1.2",

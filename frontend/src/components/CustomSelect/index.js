@@ -105,7 +105,9 @@ export default class CustomSelect extends Component {
 
   showList = () => {
     const {onChange, value} = this.props;
-
+    if (this.state.listVisible) {
+      return;
+    }
     this.setState({
       listVisible: true,
       savedValue: value

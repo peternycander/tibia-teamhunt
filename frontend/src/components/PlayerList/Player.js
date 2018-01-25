@@ -1,0 +1,54 @@
+import React from 'react';
+import Isvg from 'react-inlinesvg';
+import iconPath from 'open-iconic/svg/clipboard.svg';
+import clipboard from 'clipboard-js';
+import {Player as Wrapper, FullWidth} from './styled';
+
+const promotionNames = {
+  //Note the non breaking spaces
+  'Elite Knight': true,
+  'Master Sorcerer': true,
+  'Elder Druid': true,
+  'Royal Paladin': true
+};
+const promoted = vocation => Boolean(promotionNames[vocation]);
+export default class Player extends React.Component {
+  state = {
+    showCopied: false
+  };
+  copyText = async text => {
+    await clipboard.copy(text);
+    this.setState({showCopied: true});
+    setTimeout(() => {
+      this.setState({showCopied: false});
+    }, 2000);
+  };
+  render() {
+    const {player, shareRange} = this.props;
+    const {showCopied} = this.state;
+    const regularContent = (
+      <React.Fragment>
+        <button onClick={() => this.copyText(player.get('name'))} title='Copy name to clipboard'>
+          <Isvg src={iconPath} />
+        </button>
+        <a
+          href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
+            player.get('name').replace(/ /g, ' ')
+          )}`}
+          target='_blank'
+        >
+          {player.get('name')}
+        </a>
+        <span>{player.get('level')}</span>
+      </React.Fragment>
+    );
+    return (
+      <Wrapper
+        sharable={player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')}
+        promoted={promoted(player.get('vocation'))}
+      >
+        {showCopied ? <FullWidth>Copied name to clipboard</FullWidth> : regularContent}
+      </Wrapper>
+    );
+  }
+}

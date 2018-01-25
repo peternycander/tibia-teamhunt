@@ -6,20 +6,33 @@ export const Player = styled.div.attrs({
 })`
   display: grid;
   grid-template-columns: 15px 1fr 20px;
+  grid-gap: 5px;
   padding: 4px;
   border-radius: 2px;
   margin-bottom: 2px;
   font-size: 11px;
   align-items: center;
   background-color: ${props => (props.sharable ? colors.highlightGreen : 'inherit')};
-  span:first-child {
-    grid-column: ${({promoted}) => (promoted ? 'span 2' : 'auto')};
+  a {
+    color: ${colors.link};
+    :hover {
+      text-decoration: underline;
+    }
   }
-  :after {
-    display: ${({promoted}) => (promoted ? 'none' : 'block')};
-    content: '💔';
-    order: -1;
-    font-size: 9px;
+  button {
+    background: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    outline: none;
+    fill: hsla(0, 0%, 30%, 1);
+    :hover {
+      fill: hsla(0, 0%, 0%, 1);
+    }
   }
 `;
 
@@ -31,6 +44,24 @@ export const VocationGrid = styled.div`
 
 export const StyledList = styled.div`
   display: ${({hide}) => (hide ? 'none' : 'block')};
+`;
+export const FullWidth = styled.div`
+  grid-column: 1 / -1;
+  text-align: center;
+  animation-duration: 1.8s;
+  animation-name: fadeInOut;
+  animation-fill-mode: forwards;
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 `;
 
 export const ListWrapper = styled.div`

@@ -22,7 +22,8 @@ function mapDispatchToProps(dispatch) {
     highlightPreviousWorld: () => dispatch(worldActions.highlightPreviousWorld()),
     showWorldList: () => dispatch(worldActions.showWorldList()),
     hideWorldList: () => dispatch(worldActions.hideWorldList()),
-    selectHighlighted: () => dispatch(worldActions.selectHighlighted())
+    selectHighlighted: () => dispatch(worldActions.selectHighlighted()),
+    reloadPlayers: world => dispatch(worldActions.loadPlayers(world))
   };
 }
 

@@ -2,27 +2,12 @@ import React, {Component} from 'react';
 import Error from 'components/Error';
 import TryAgainButton from 'components/TryAgainButton';
 import Loader from 'components/Loader';
-import {VocationGrid, Player, StyledList, ListWrapper} from './styled';
+import {VocationGrid, StyledList, ListWrapper} from './styled';
+import Player from './Player';
 import {List} from 'immutable';
 
-const promotionNames = {
-  //Note the non breaking spaces
-  'Elite Knight': true,
-  'Master Sorcerer': true,
-  'Elder Druid': true,
-  'Royal Paladin': true
-};
-
-const promoted = vocation => Boolean(promotionNames[vocation]);
 const getDomPlayerFactory = shareRange => player => (
-  <Player
-    key={player.get('name')}
-    sharable={player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')}
-    promoted={promoted(player.get('vocation'))}
-  >
-    <span>{player.get('name')}</span>
-    <span>{player.get('level')}</span>
-  </Player>
+  <Player key={player.get('name')} shareRange={shareRange} player={player} />
 );
 export default class PlayerList extends Component {
   constructor() {

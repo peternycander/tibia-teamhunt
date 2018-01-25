@@ -1,5 +1,6 @@
 {
   "theme": "hsla(170, 35%, 41%, 1)",
+  "link": "hsla(200, 35%, 25%, 1)",
   "errorRed": "#e85b5f",
   "backgroundGray": "#eee",
   "borderGray": "rgba(0,0,0,0.12)",

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CustomSelect from 'components/CustomSelect';
 import {fromJS} from 'immutable';
-import PlayerInput from './styled/PlayerInput';
+import {PlayerInput} from './styled';
 const vocations = fromJS(['Knight', 'Paladin', 'Druid', 'Sorcerer']);
 export default class TeamBuilder extends Component {
   constructor(props) {
