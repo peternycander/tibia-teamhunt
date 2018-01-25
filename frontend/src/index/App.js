@@ -7,8 +7,8 @@ import './App.css';
 import styled from 'styled-components';
 
 const Body = styled.div`
-  padding-top: 20px;
-  max-width: 60rem;
+  width: 60rem;
+  max-width: 90vw;
   margin: 0 auto;
 `;
 

@@ -2,13 +2,23 @@ import React, {Component} from 'react';
 import Error from 'components/Error';
 import TryAgainButton from 'components/TryAgainButton';
 import Loader from 'components/Loader';
-import {VocationGrid, Player} from './styled';
+import {VocationGrid, Player, StyledList, ListWrapper} from './styled';
 import {List} from 'immutable';
 
+const promotionNames = {
+  //Note the non breaking spaces
+  'Elite Knight': true,
+  'Master Sorcerer': true,
+  'Elder Druid': true,
+  'Royal Paladin': true
+};
+
+const promoted = vocation => Boolean(promotionNames[vocation]);
 const getDomPlayerFactory = shareRange => player => (
   <Player
     key={player.get('name')}
     sharable={player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')}
+    promoted={promoted(player.get('vocation'))}
   >
     <span>{player.get('name')}</span>
     <span>{player.get('level')}</span>
@@ -79,28 +89,28 @@ export default class PlayerList extends Component {
     const knightList = knights.map(getDomPlayer);
     const paladinList = paladins.map(getDomPlayer);
     const sorcererList = sorcerers.map(getDomPlayer);
-    const minimizeDruids = this.state.minimizeDruids || haveDruid;
-    const minimizePaladins = this.state.minimizePaladins || havePaladin;
-    const minimizeKnights = this.state.minimizeKnights || haveKnight;
-    const minimizeSorcerers = this.state.minimizeSorcerers || haveSorcerer;
+    const minimizeDruids = this.state.minimizeDruids;
+    const minimizePaladins = this.state.minimizePaladins;
+    const minimizeKnights = this.state.minimizeKnights;
+    const minimizeSorcerers = this.state.minimizeSorcerers;
     return (
       <VocationGrid>
-        <div style={minimizeDruids ? {display: 'none'} : {}}>
+        <ListWrapper hide={haveDruid} minimized={minimizeDruids}>
           <h4 onClick={() => this.toggleMinimized('druids')}>Druids</h4>
-          <div>{druidList}</div>
-        </div>
-        <div style={minimizeKnights ? {display: 'none'} : {}}>
+          <StyledList hide={minimizeDruids}>{druidList}</StyledList>
+        </ListWrapper>
+        <ListWrapper hide={haveKnight} minimized={minimizeKnights}>
           <h4 onClick={() => this.toggleMinimized('knights')}>Knights</h4>
-          <div>{knightList}</div>
-        </div>
-        <div style={minimizePaladins ? {display: 'none'} : {}}>
+          <StyledList hide={minimizeKnights}>{knightList}</StyledList>
+        </ListWrapper>
+        <ListWrapper hide={havePaladin} minimized={minimizePaladins}>
           <h4 onClick={() => this.toggleMinimized('paladins')}>Paladins</h4>
-          <div>{paladinList}</div>
-        </div>
-        <div style={minimizeSorcerers ? {display: 'none'} : {}}>
+          <StyledList hide={minimizePaladins}>{paladinList}</StyledList>
+        </ListWrapper>
+        <ListWrapper hide={haveSorcerer} minimized={minimizeSorcerers}>
           <h4 onClick={() => this.toggleMinimized('sorcerers')}>Sorcerers</h4>
-          <div>{sorcererList}</div>
-        </div>
+          <StyledList hide={minimizeSorcerers}>{sorcererList}</StyledList>
+        </ListWrapper>
       </VocationGrid>
     );
   }

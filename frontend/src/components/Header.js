@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.header`
-  height: 15vh;
+  height: 12vh;
   min-height: 80px;
   max-height: 200px;
   font-style: italic;

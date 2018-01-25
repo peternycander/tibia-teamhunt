@@ -17,8 +17,7 @@ export default styled.div`
     outline: 0;
     text-align: center;
     background: transparent;
-    height: 18px;
-    max-width: 40px;
+    max-width: 50px;
     margin-right: 15px;
     font-size: 14px;
     display: flex;
