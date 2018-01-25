@@ -49,7 +49,7 @@ export default class Player extends React.Component {
         </button>
         <a
           href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
-            player.get('name').replace(/ /g, ' ')
+            player.get('name')
           )}`}
           target='_blank'
         >

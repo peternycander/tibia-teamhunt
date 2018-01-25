@@ -128,7 +128,9 @@ async function listPlayers(req, res) {
           inLevel = false;
           inVocation = true;
         } else if (inVocation) {
-          inVocation = false;
+          inVocation = false; 
+          // eslint-disable-next-line  no-irregular-whitespace
+          currentPlayer.name = currentPlayer.name.replace(/ /g, ' ');
           players.push(Object.assign({}, currentPlayer));
           currentPlayer = {};
         }
