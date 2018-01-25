@@ -17,8 +17,7 @@ async function listAll() {
   try {
     response = await fetch('https://secure.tibia.com/community/?subtopic=worlds');
     if (!response.ok) {
-      console.error('Getting worlds resulted in not ok status');
-      throw new Error();
+      throw new Error('Getting worlds resulted in not ok status');
     }
     response = await response.text();
   } catch (error) {

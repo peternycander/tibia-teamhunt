@@ -2,7 +2,7 @@ import {fromJS} from 'immutable';
 
 let selectedWorld = 'Antica';
 try {
-  selectedWorld = localStorage.getItem('world');
+  selectedWorld = localStorage.getItem('world') || selectedWorld;
 } catch (e) {
   //Ignore no localStorage;
 }
