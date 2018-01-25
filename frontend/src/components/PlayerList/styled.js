@@ -4,24 +4,22 @@ import colors from 'globals/colors';
 export const Player = styled.div.attrs({
   title: ({promoted}) => (promoted ? undefined : 'Not promoted')
 })`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 15px 1fr 20px;
   padding: 4px;
-  padding-left: ${({promoted}) => (promoted ? '4px' : '20px')};
   border-radius: 2px;
   margin-bottom: 2px;
   font-size: 11px;
+  align-items: center;
   background-color: ${props => (props.sharable ? colors.highlightGreen : 'inherit')};
-  position: relative;
+  span:first-child {
+    grid-column: ${({promoted}) => (promoted ? 'span 2' : 'auto')};
+  }
   :after {
-    display: ${({promoted}) => (promoted ? 'none' : 'flex')};
+    display: ${({promoted}) => (promoted ? 'none' : 'block')};
     content: '💔';
-    align-items: center;
-    font-size: 10px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 2px;
+    order: -1;
+    font-size: 9px;
   }
 `;
 
