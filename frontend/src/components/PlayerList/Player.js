@@ -23,6 +23,23 @@ export default class Player extends React.Component {
       this.setState({showCopied: false});
     }, 2000);
   };
+  shouldComponentUpdate({player, shareRange}, {showCopied}) {
+    if (showCopied !== this.state.showCopied) {
+      return true;
+    }
+    if (player !== this.props.player) {
+      return true;
+    }
+    const prevPlayer = this.props.player;
+    const prevShareRange = this.props.shareRange;
+    if (
+      (player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')) ===
+      (prevPlayer.get('level') >= prevShareRange.get('min') && prevPlayer.get('level') <= prevShareRange.get('max'))
+    ) {
+      return false;
+    }
+    return true;
+  }
   render() {
     const {player, shareRange} = this.props;
     const {showCopied} = this.state;
