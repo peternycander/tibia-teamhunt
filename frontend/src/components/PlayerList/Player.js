@@ -1,5 +1,5 @@
 import React from 'react';
-import iconPath from 'open-iconic/svg/clipboard.svg';
+import CopyIcon from './CopyIcon';
 import clipboard from 'clipboard-js';
 import {Player as Wrapper, FullWidth} from './styled';
 
@@ -45,7 +45,7 @@ export default class Player extends React.Component {
     const regularContent = (
       <React.Fragment>
         <button onClick={() => this.copyText(player.get('name'))} title='Copy name to clipboard'>
-          <img src={iconPath} alt='copy' />
+          <CopyIcon />
         </button>
         <a
           href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
