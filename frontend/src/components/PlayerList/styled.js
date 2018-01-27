@@ -73,28 +73,33 @@ export const Player = styled.div.attrs({
     line-height: 12px;
     white-space: nowrap;
   }
-  a {
-    color: ${({promoted}) => (promoted ? colors.link : colors.freeAccount)};
-    :hover {
-      text-decoration: underline;
-    }
-  }
-  button {
-    background: none;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    outline: none;
-    fill: hsla(0, 0%, 30%, 1);
-    :hover {
-      fill: hsla(0, 0%, 0%, 1);
-    }
+  
+  
+`;
+
+export const PlayerName = styled.a`
+  color: ${({promoted}) => (promoted ? colors.link : colors.freeAccount)};
+  :hover {
+    text-decoration: underline;
   }
 `;
+
+export const CopyButton = styled.button`
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  outline: none;
+  fill: hsla(0, 0%, 30%, 1);
+  :hover {
+    fill: hsla(0, 0%, 0%, 1);
+  }
+`;
+
 export const VocationGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

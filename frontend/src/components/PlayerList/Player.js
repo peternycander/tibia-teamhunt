@@ -1,7 +1,7 @@
 import React from 'react';
 import CopyIcon from './CopyIcon';
 import clipboard from 'clipboard-js';
-import {Player as Wrapper, FullWidth} from './styled';
+import {Player as Wrapper, FullWidth, CopyButton, PlayerName} from './styled';
 
 const promotionNames = {
   //Note the non breaking spaces
@@ -45,19 +45,21 @@ export default class Player extends React.Component {
   render() {
     const {player, shareRange} = this.props;
     const {showCopied} = this.state;
+    const isPromoted = promoted(player.get('vocation'));
     const regularContent = (
       <React.Fragment>
-        <button onClick={() => this.copyText(player.get('name'))} title='Copy name to clipboard'>
+        <CopyButton onClick={() => this.copyText(player.get('name'))} title='Copy name to clipboard'>
           <CopyIcon />
-        </button>
-        <a
+        </CopyButton>
+        <PlayerName
           href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
             player.get('name')
           )}`}
           target='_blank'
+          promoted={isPromoted}
         >
           {player.get('name')}
-        </a>
+        </PlayerName>
         <span>{player.get('level')}</span>
       </React.Fragment>
     );
@@ -65,7 +67,7 @@ export default class Player extends React.Component {
       <Wrapper
         ref={e => (this.mountCheck = e)}
         sharable={player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')}
-        promoted={promoted(player.get('vocation'))}
+        promoted={isPromoted}
       >
         {showCopied ? <FullWidth>Copied name to clipboard</FullWidth> : regularContent}
       </Wrapper>
