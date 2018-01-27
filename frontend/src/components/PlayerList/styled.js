@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import colors from 'globals/colors';
 
 export const Player = styled.div.attrs({
-  title: ({promoted}) => (promoted ? undefined : 'Not promoted')
+  'data-hint': ({promoted}) => (promoted ? '' : 'Not promoted')
 })`
   display: grid;
   grid-template-columns: 15px 1fr 20px;
@@ -12,9 +12,69 @@ export const Player = styled.div.attrs({
   margin-bottom: 2px;
   font-size: 11px;
   align-items: center;
+  position: relative;
   background-color: ${props => (props.sharable ? colors.highlightGreen : 'inherit')};
+  @media (hover: hover) {
+    :hover {
+      :after,
+      :before {
+        animation-duration: 3s;
+        animation-name: fadeInOut;
+        @keyframes fadeInOut {
+          0% {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          15% {
+            transform: translateY(8px);
+            opacity: 0;
+          }
+          30% {
+            transform: translateY(0px);
+            opacity: 1;
+          }
+          90% {
+            transform: translateY(0px);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(0px);
+            opacity: 0;
+          }
+      }
+    }
+  }
+  :before,
+  :after {
+    opacity: 0;
+    top: 100%;
+    z-index: 2;
+    position: absolute;
+    transform: translateY(8px);
+    pointer-events: none;
+    display: ${({promoted}) => (promoted ? 'none' : 'block')}
+  }
+  :before {
+    content: '';
+    background: transparent;
+    border: 5px solid transparent;
+    border-bottom-color: hsla(0, 0%, 7%, 1);
+    left: 35px;
+    margin-top: -9px;
+  }
+  :after {
+    border-radius: 3px;
+    left: 25px;
+    content: attr(data-hint);
+    background: hsla(0, 0%, 7%, 1);
+    color: white;
+    padding: 4px 5px;
+    font-size: 10px;
+    line-height: 12px;
+    white-space: nowrap;
+  }
   a {
-    color: ${colors.link};
+    color: ${({promoted}) => (promoted ? colors.link : colors.freeAccount)};
     :hover {
       text-decoration: underline;
     }
@@ -35,7 +95,6 @@ export const Player = styled.div.attrs({
     }
   }
 `;
-
 export const VocationGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

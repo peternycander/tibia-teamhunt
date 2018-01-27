@@ -19,6 +19,9 @@ export default class Player extends React.Component {
     await clipboard.copy(text);
     this.setState({showCopied: true});
     setTimeout(() => {
+      if (!this.mountCheck) {
+        return;
+      }
       this.setState({showCopied: false});
     }, 2000);
   };
@@ -60,6 +63,7 @@ export default class Player extends React.Component {
     );
     return (
       <Wrapper
+        ref={e => (this.mountCheck = e)}
         sharable={player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')}
         promoted={promoted(player.get('vocation'))}
       >

@@ -1,6 +1,7 @@
 {
   "theme": "hsla(170, 35%, 41%, 1)",
   "link": "hsla(200, 35%, 25%, 1)",
+  "freeAccount": "hsla(0, 76%, 35%, 1)",
   "errorRed": "#e85b5f",
   "backgroundGray": "#eee",
   "borderGray": "rgba(0,0,0,0.12)",
