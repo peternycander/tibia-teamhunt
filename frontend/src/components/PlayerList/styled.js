@@ -98,6 +98,9 @@ export const CopyButton = styled.button`
   :hover {
     fill: hsla(0, 0%, 0%, 1);
   }
+  svg {
+    width: 11px;
+  }
 `;
 
 export const VocationGrid = styled.div`
