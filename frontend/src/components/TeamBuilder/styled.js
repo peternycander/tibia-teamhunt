@@ -3,22 +3,21 @@ import colors from 'globals/colors';
 
 export const PlayerInput = styled.div`
   display: flex;
-  width: 280px;
-  justify-content: center;
+  width: 200px;
+  justify-content: space-between;
   align-items: center;
   margin: 20px auto 0 auto;
   > form {
     flex: 1;
   }
   > input {
-    width: 50px;
+    width: 80px;
     border: none;
-    border-bottom: 1px solid ${colors.borderGray};
-    border-radius: 0;
+    border-radius: 5px;
     outline: 0;
-    text-align: center;
-    background: transparent;
-    margin-right: 15px;
+    text-align: left;
+    padding: 10px;
+    background: ${colors.backgroundGray};
     font-size: 14px;
     display: flex;
   }

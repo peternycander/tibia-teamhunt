@@ -1,3 +1,3 @@
-import Container from './Container';
+import TeamBuilder from './TeamBuilder';
 
-export default Container;
+export default TeamBuilder;

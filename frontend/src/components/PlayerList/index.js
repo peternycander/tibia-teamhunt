@@ -1,3 +1,3 @@
-import Container from './Container';
+import PlayerList from './PlayerList';
 
-export default Container;
+export default PlayerList;

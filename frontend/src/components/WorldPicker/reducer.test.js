@@ -1,26 +1,16 @@
-import reducer from './index';
-import {fromJS} from 'immutable';
-
-it('sets world to payload on CHANGE_WORLD', () => {
-  const action = {
-    type: 'CHANGE_WORLD',
-    payload: 'test'
-  };
-  const state = reducer();
-  const result = reducer(state, action);
-
-  expect(result.get('selectedWorld')).toBe('test');
-});
+import produce from 'immer';
+import reducer from './reducer';
 
 it('sets validWorld=true on CHANGE_WORLD when world exists', () => {
   const action = {
     type: 'CHANGE_WORLD',
     payload: 'Antica'
   };
-  const state = reducer().setIn(['map', 'antica'], 'Antica');
+  const state = produce(reducer(), draft => void (draft.map.antica = 'Antica'));
+
   const result = reducer(state, action);
 
-  expect(result.get('validWorld')).toBe(true);
+  expect(result.validWorld).toBe(true);
 });
 
 it('sets validWorld=false on CHANGE_WORLD when world does not exists', () => {
@@ -28,10 +18,10 @@ it('sets validWorld=false on CHANGE_WORLD when world does not exists', () => {
     type: 'CHANGE_WORLD',
     payload: 'Nova'
   };
-  const state = reducer().setIn(['map', 'antica'], 'Antica');
+  const state = produce(reducer(), draft => void (draft.map.antica = 'Antica'));
   const result = reducer(state, action);
 
-  expect(result.get('validWorld')).toBe(false);
+  expect(result.validWorld).toBe(false);
 });
 
 it('ignores case when settings validWorld on CHANGE_WORLD', () => {
@@ -39,10 +29,11 @@ it('ignores case when settings validWorld on CHANGE_WORLD', () => {
     type: 'CHANGE_WORLD',
     payload: 'antica'
   };
-  const state = reducer().setIn(['map', 'antica'], 'Antica');
+  const state = produce(reducer(), draft => void (draft.map.antica = 'Antica'));
+
   const result = reducer(state, action);
 
-  expect(result.get('validWorld')).toBe(true);
+  expect(result.validWorld).toBe(true);
 });
 
 it('filters list to include only part of selectedWorld to 0 on CHANGE_WORLD', () => {
@@ -50,12 +41,13 @@ it('filters list to include only part of selectedWorld to 0 on CHANGE_WORLD', ()
     type: 'CHANGE_WORLD',
     payload: 'a'
   };
-  const state = reducer()
-    .set('unfilteredList', fromJS(['aba', 'bab', 'cc', 'fd']))
-    .set('list', fromJS(['test']));
+  const state = produce(reducer(), draft => {
+    draft.unfilteredList = ['aba', 'bab', 'cc', 'fd'];
+    draft.list = ['test'];
+  });
   const result = reducer(state, action);
 
-  expect(result.get('list')).toEqual(fromJS(['aba', 'bab']));
+  expect(result.list).toEqual(['aba', 'bab']);
 });
 
 it('sets map, list and unfilteredList on LOAD_WORLDS_DONE', () => {
@@ -70,9 +62,9 @@ it('sets map, list and unfilteredList on LOAD_WORLDS_DONE', () => {
   const state = reducer();
   const result = reducer(state, action);
 
-  expect(result.get('map')).toEqual(fromJS(payload));
-  expect(result.get('list')).toEqual(fromJS(['Antica', 'Xylana']));
-  expect(result.get('unfilteredList')).toEqual(fromJS(['Antica', 'Xylana']));
+  expect(result.map).toEqual(payload);
+  expect(result.list).toEqual(['Antica', 'Xylana']);
+  expect(result.unfilteredList).toEqual(['Antica', 'Xylana']);
 });
 
 it('sets loading=false on LOAD_WORLDS_DONE', () => {
@@ -84,20 +76,24 @@ it('sets loading=false on LOAD_WORLDS_DONE', () => {
     type: 'LOAD_WORLDS_DONE',
     payload
   };
-  const state = reducer().set('loading', true);
+  const state = produce(reducer(), draft => {
+    draft.loading = true;
+  });
   const result = reducer(state, action);
 
-  expect(result.get('loading')).toBe(false);
+  expect(result.loading).toBe(false);
 });
 
 it('sets loading=false on LOAD_WORLDS_ERROR', () => {
   const action = {
     type: 'LOAD_WORLDS_ERROR'
   };
-  const state = reducer().set('loading', true);
+  const state = produce(reducer(), draft => {
+    draft.loading = true;
+  });
   const result = reducer(state, action);
 
-  expect(result.get('loading')).toBe(false);
+  expect(result.loading).toBe(false);
 });
 
 it('sets error to payload of LOAD_WORLDS_ERROR', () => {
@@ -105,38 +101,46 @@ it('sets error to payload of LOAD_WORLDS_ERROR', () => {
     type: 'LOAD_WORLDS_ERROR',
     payload: 'backend error'
   };
-  const state = reducer().set('error', '');
+  const state = produce(reducer(), draft => {
+    draft.error = '';
+  });
   const result = reducer(state, action);
 
-  expect(result.get('error')).toEqual('backend error');
+  expect(result.error).toEqual('backend error');
 });
 
 it('sets error to empty string if payload of LOAD_WORLDS_ERROR is undefined', () => {
   const action = {
     type: 'LOAD_WORLDS_ERROR'
   };
-  const state = reducer().set('error', 'err');
+  const state = produce(reducer(), draft => {
+    draft.error = 'err';
+  });
   const result = reducer(state, action);
 
-  expect(result.get('error')).toEqual('');
+  expect(result.error).toEqual('');
 });
 
 it('sets loading=true on LOAD_WORLDS_STARTED', () => {
   const action = {
     type: 'LOAD_WORLDS_STARTED'
   };
-  const state = reducer().set('loading', false);
+  const state = produce(reducer(), draft => {
+    draft.loading = false;
+  });
   const result = reducer(state, action);
 
-  expect(result.get('loading')).toBe(true);
+  expect(result.loading).toBe(true);
 });
 
 it('resets error on LOAD_WORLDS_STARTED', () => {
   const action = {
     type: 'LOAD_WORLDS_STARTED'
   };
-  const state = reducer().set('error', 'error');
+  const state = produce(reducer(), draft => {
+    draft.error = 'error';
+  });
   const result = reducer(state, action);
 
-  expect(result.get('error')).toBe('');
+  expect(result.error).toBe('');
 });

@@ -24,7 +24,7 @@ export default class CustomSelect extends Component {
     validSelection: PropTypes.bool,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    children: PropTypes.object,
+    children: PropTypes.array,
     writable: PropTypes.bool
   };
   componentDidMount() {
@@ -37,9 +37,14 @@ export default class CustomSelect extends Component {
   componentDidUpdate(prevProps, prevState) {
     const highlightedIndex = this.state.highlightedIndex;
     if (prevState.highlightedIndex !== highlightedIndex) {
-      const elementHeight = this.list.children[highlightedIndex].getBoundingClientRect().height;
+      const elementHeight = this.list.children[
+        highlightedIndex
+      ].getBoundingClientRect().height;
       const worldYPos = highlightedIndex * elementHeight;
-      if (worldYPos + elementHeight >= this.list.scrollTop + this.list.offsetHeight) {
+      if (
+        worldYPos + elementHeight >=
+        this.list.scrollTop + this.list.offsetHeight
+      ) {
         this.list.scrollTop += elementHeight;
       } else if (worldYPos < this.list.scrollTop) {
         this.list.scrollTop -= elementHeight;
@@ -49,7 +54,10 @@ export default class CustomSelect extends Component {
 
   onDown = () => {
     this.setState({
-      highlightedIndex: Math.min(this.state.highlightedIndex + 1, this.props.children.size - 1)
+      highlightedIndex: Math.min(
+        this.state.highlightedIndex + 1,
+        this.props.children.length - 1
+      )
     });
   };
 
@@ -118,7 +126,12 @@ export default class CustomSelect extends Component {
     const {validSelection, value, onChange, children, writable} = this.props;
     const {highlightedIndex, listVisible} = this.state;
     const items = children.map((item, i) => (
-      <CustomOption key={item} value={item} onMouseDown={() => onChange(item)} selected={highlightedIndex === i}>
+      <CustomOption
+        key={item}
+        value={item}
+        onMouseDown={() => onChange(item)}
+        selected={highlightedIndex === i}
+      >
         {item}
       </CustomOption>
     ));
@@ -134,7 +147,10 @@ export default class CustomSelect extends Component {
           onBlur={this.hideList}
           innerRef={e => (this.input = e)}
         />
-        <Isvg src={selectIconPath} wrapper={props => <SelectIcon {...props} />} />
+        <Isvg
+          src={selectIconPath}
+          wrapper={props => <SelectIcon {...props} />}
+        />
         {listVisible && <List innerRef={e => (this.list = e)}>{items}</List>}
       </SelectWrapper>
     );

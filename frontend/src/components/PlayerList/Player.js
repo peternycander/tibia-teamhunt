@@ -35,8 +35,9 @@ export default class Player extends React.Component {
     const prevPlayer = this.props.player;
     const prevShareRange = this.props.shareRange;
     if (
-      (player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')) ===
-      (prevPlayer.get('level') >= prevShareRange.get('min') && prevPlayer.get('level') <= prevShareRange.get('max'))
+      (player.level >= shareRange.min && player.level <= shareRange.max) ===
+      (prevPlayer.level >= prevShareRange.min &&
+        prevPlayer.level <= prevShareRange.max)
     ) {
       return false;
     }
@@ -45,31 +46,40 @@ export default class Player extends React.Component {
   render() {
     const {player, shareRange} = this.props;
     const {showCopied} = this.state;
-    const isPromoted = promoted(player.get('vocation'));
+    const isPromoted = promoted(player.vocation);
     const regularContent = (
       <React.Fragment>
-        <CopyButton onClick={() => this.copyText(player.get('name'))} title='Copy name to clipboard'>
+        <CopyButton
+          onClick={() => this.copyText(player.name)}
+          title='Copy name to clipboard'
+        >
           <CopyIcon />
         </CopyButton>
         <PlayerName
           href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
-            player.get('name')
+            player.name
           )}`}
           target='_blank'
           promoted={isPromoted}
         >
-          {player.get('name')}
+          {player.name}
         </PlayerName>
-        <span>{player.get('level')}</span>
+        <span>{player.level}</span>
       </React.Fragment>
     );
     return (
       <Wrapper
         ref={e => (this.mountCheck = e)}
-        sharable={player.get('level') >= shareRange.get('min') && player.get('level') <= shareRange.get('max')}
+        sharable={
+          player.level >= shareRange.min && player.level <= shareRange.max
+        }
         promoted={isPromoted}
       >
-        {showCopied ? <FullWidth>Copied name to clipboard</FullWidth> : regularContent}
+        {showCopied ? (
+          <FullWidth>Copied name to clipboard</FullWidth>
+        ) : (
+          regularContent
+        )}
       </Wrapper>
     );
   }

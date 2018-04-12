@@ -4,24 +4,33 @@ import Error from 'components/Error';
 import TryAgainButton from 'components/TryAgainButton';
 import Loader from 'components/Loader';
 import {Wrapper, ReloadButton} from './styled';
-import Isvg from 'react-inlinesvg';
-import iconPath from 'open-iconic/svg/reload.svg';
+import {Consumer as WorldConsumer} from 'contexts/WorldContext';
+import ReloadIcon from './ReloadIcon';
+import reducer from './reducer';
+import actionsFactory from './actionsFactory';
 
-export default class WorldPicker extends Component {
+class WorldPicker extends Component {
+  state = reducer();
+  actions = actionsFactory(action =>
+    this.setState(reducer(this.state, action))
+  );
   componentDidMount() {
-    this.props.loadWorlds();
+    this.actions.loadWorlds();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.validWorld !== this.state.validWorld &&
+      this.state.validWorld
+    ) {
+      this.props.updateWorld(this.props.selectedWorld);
+      this.props.loadPlayers(this.props.selectedWorld);
+    }
   }
   render() {
-    const {
-      selectedWorld = 'Antica',
-      changeWorld,
-      validWorld,
-      worlds,
-      error,
-      loadWorlds,
-      loading,
-      reloadPlayers
-    } = this.props;
+    const {loadPlayers, selectedWorld} = this.props;
+    const {validWorld, list: worlds, error, loading, world} = this.state;
+    const {loadWorlds, changeWorld} = this.actions;
+
     if (error) {
       return (
         <div>
@@ -34,13 +43,24 @@ export default class WorldPicker extends Component {
     }
     return (
       <Wrapper>
-        <ReloadButton onClick={() => reloadPlayers(selectedWorld)}>
-          <Isvg src={iconPath} />
+        <ReloadButton onClick={() => loadPlayers(selectedWorld)}>
+          <ReloadIcon />
         </ReloadButton>
-        <CustomSelect value={selectedWorld} validSelection={validWorld} onChange={changeWorld} writable>
+        <CustomSelect
+          value={world}
+          validSelection={validWorld}
+          onChange={updatedWorld => changeWorld(updatedWorld)}
+          writable
+        >
           {worlds}
         </CustomSelect>
       </Wrapper>
     );
   }
 }
+
+export default props => (
+  <WorldConsumer>
+    {world => <WorldPicker {...props} selectedWorld={world} />}
+  </WorldConsumer>
+);

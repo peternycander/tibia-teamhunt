@@ -1,3 +1,3 @@
-import Container from './Container';
+import WorldPicker from './WorldPicker';
 
-export default Container;
+export default WorldPicker;

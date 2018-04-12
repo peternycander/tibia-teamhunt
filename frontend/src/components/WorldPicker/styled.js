@@ -3,7 +3,7 @@ import colors from 'globals/colors';
 
 export const Wrapper = styled.div`
   display: flex;
-  width: 280px;
+  width: 200px;
   justify-content: center;
   align-items: center;
   margin: 20px auto 0 auto;

@@ -5,19 +5,16 @@
   "proxy": "http://localhost:3050",
   "dependencies": {
     "clipboard-js": "^0.3.6",
-    "immutable": "^3.8.2",
+    "immer": "^1.2.1",
     "jest-cli": "^21.2.1",
     "loaders.css": "^0.1.2",
     "open-iconic": "^1.1.1",
-    "prop-types": "^15.6.0",
-    "react": "^16.0",
-    "react-dom": "^16.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.3",
+    "react-dom": "^16.3",
     "react-inlinesvg": "^0.6.2",
     "react-loaders": "^2.6.1",
-    "react-redux": "^5.0.6",
     "react-scripts": "1.0.13",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
     "styled-components": "^2.4.0"
   },
   "scripts": {
