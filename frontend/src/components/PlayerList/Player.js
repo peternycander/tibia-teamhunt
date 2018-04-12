@@ -25,19 +25,14 @@ export default class Player extends React.Component {
       this.setState({showCopied: false});
     }, 2000);
   };
-  shouldComponentUpdate({player, shareRange}, {showCopied}) {
+  shouldComponentUpdate({player: {level}, shareRange}, {showCopied}) {
     if (showCopied !== this.state.showCopied) {
       return true;
     }
-    if (player !== this.props.player) {
-      return true;
-    }
-    const prevPlayer = this.props.player;
     const prevShareRange = this.props.shareRange;
     if (
-      (player.level >= shareRange.min && player.level <= shareRange.max) ===
-      (prevPlayer.level >= prevShareRange.min &&
-        prevPlayer.level <= prevShareRange.max)
+      (level >= shareRange.min && level <= shareRange.max) ===
+      (level >= prevShareRange.min && level <= prevShareRange.max)
     ) {
       return false;
     }
@@ -47,26 +42,6 @@ export default class Player extends React.Component {
     const {player, shareRange} = this.props;
     const {showCopied} = this.state;
     const isPromoted = promoted(player.vocation);
-    const regularContent = (
-      <React.Fragment>
-        <CopyButton
-          onClick={() => this.copyText(player.name)}
-          title='Copy name to clipboard'
-        >
-          <CopyIcon />
-        </CopyButton>
-        <PlayerName
-          href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
-            player.name
-          )}`}
-          target='_blank'
-          promoted={isPromoted}
-        >
-          {player.name}
-        </PlayerName>
-        <span>{player.level}</span>
-      </React.Fragment>
-    );
     return (
       <Wrapper
         ref={e => (this.mountCheck = e)}
@@ -78,7 +53,24 @@ export default class Player extends React.Component {
         {showCopied ? (
           <FullWidth>Copied name to clipboard</FullWidth>
         ) : (
-          regularContent
+          <React.Fragment>
+            <CopyButton
+              onClick={() => this.copyText(player.name)}
+              title='Copy name to clipboard'
+            >
+              <CopyIcon />
+            </CopyButton>
+            <PlayerName
+              href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
+                player.name
+              )}`}
+              target='_blank'
+              promoted={isPromoted}
+            >
+              {player.name}
+            </PlayerName>
+            <span>{player.level}</span>
+          </React.Fragment>
         )}
       </Wrapper>
     );

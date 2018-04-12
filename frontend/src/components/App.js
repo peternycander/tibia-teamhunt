@@ -4,7 +4,6 @@ import WorldPicker from 'components/WorldPicker';
 import LevelPicker from 'components/LevelPicker';
 import PlayerList from 'components/PlayerList';
 import styled from 'styled-components';
-import {Provider as WorldProvider} from 'contexts/WorldContext';
 import InputState from 'components/StateProviders/InputState';
 import OnlineListState from 'components/StateProviders/OnlineListState';
 
@@ -18,47 +17,56 @@ const SubHeader = styled.h3`
   text-align: center;
 `;
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Header>Tibia Teamhunt</Header>
-        <Body>
-          <InputState>
-            {({updatePlayer, updateWorld, state: {world, player}}) => (
-              <WorldProvider value={world}>
-                <OnlineListState>
-                  {({
-                    state: {error, loading, onlineList},
-                    actions: {loadPlayers}
-                  }) => (
-                    <React.Fragment>
-                      <SubHeader>Pick your world</SubHeader>
-                      <WorldPicker
-                        updateWorld={updateWorld}
-                        loadPlayers={loadPlayers}
-                      />
-                      <LevelPicker
-                        updatePlayer={updatePlayer}
-                        player={player}
-                      />
-                      <PlayerList
-                        level={player.level}
-                        error={error}
-                        loading={loading}
-                        onlineList={onlineList}
-                        loadPlayers={loadPlayers}
-                      />
-                    </React.Fragment>
-                  )}
-                </OnlineListState>
-              </WorldProvider>
-            )}
-          </InputState>
-        </Body>
-      </div>
-    );
-  }
-}
+const App = ({
+  styled,
+  updateLevel,
+  updateWorld,
+  world,
+  level,
+  error,
+  loading,
+  onlineList,
+  loadPlayers
+}) => (
+  <div>
+    <Header>Tibia Teamhunt</Header>
+    <Body>
+      <SubHeader>Pick your world</SubHeader>
+      <WorldPicker
+        updateWorld={updateWorld}
+        selectedWorld={world}
+        loadPlayers={loadPlayers}
+      />
+      <LevelPicker updateLevel={updateLevel} level={level} />
+      <PlayerList
+        level={level}
+        error={error}
+        world={world}
+        loading={loading}
+        onlineList={onlineList}
+        loadPlayers={loadPlayers}
+      />
+    </Body>
+  </div>
+);
 
-export default App;
+export default () => (
+  <InputState>
+    {({updateLevel, updateWorld, state: {world, level}}) => (
+      <OnlineListState>
+        {({state: {error, loading, onlineList}, actions: {loadPlayers}}) => (
+          <App
+            updateLevel={updateLevel}
+            updateWorld={updateWorld}
+            world={world}
+            level={level}
+            error={error}
+            loading={loading}
+            onlineList={onlineList}
+            loadPlayers={loadPlayers}
+          />
+        )}
+      </OnlineListState>
+    )}
+  </InputState>
+);

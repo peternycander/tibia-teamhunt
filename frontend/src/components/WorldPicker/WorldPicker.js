@@ -4,7 +4,6 @@ import Error from 'components/Error';
 import TryAgainButton from 'components/TryAgainButton';
 import Loader from 'components/Loader';
 import {Wrapper, ReloadButton} from './styled';
-import {Consumer as WorldConsumer} from 'contexts/WorldContext';
 import ReloadIcon from './ReloadIcon';
 import reducer from './reducer';
 import actionsFactory from './actionsFactory';
@@ -59,8 +58,4 @@ class WorldPicker extends Component {
   }
 }
 
-export default props => (
-  <WorldConsumer>
-    {world => <WorldPicker {...props} selectedWorld={world} />}
-  </WorldConsumer>
-);
+export default WorldPicker;

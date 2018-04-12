@@ -4,20 +4,18 @@ import PropTypes from 'prop-types';
 class InputState extends React.Component {
   constructor(props) {
     super(props);
-    const player = {
-      level: 100
-    };
+    let level = 100;
     let world = 'Antica';
     try {
-      const level = localStorage.getItem('level') || 100;
-      player.level = parseInt(level, 10);
+      level = localStorage.getItem('level') || 100;
+      level = parseInt(level, 10);
       world = localStorage.getItem('world') || 'Antica';
     } catch (err) {
       //Ignore error
-      player.level = 100;
+      level = 100;
     }
     this.state = {
-      player,
+      level,
       world
     };
   }
@@ -25,10 +23,10 @@ class InputState extends React.Component {
     children: PropTypes.func
   };
 
-  updatePlayer = player =>
-    this.setState({player}, () => {
+  updateLevel = level =>
+    this.setState({level}, () => {
       try {
-        localStorage.setItem('level', player.level);
+        localStorage.setItem('level', level);
       } catch (err) {
         //ignore
       }
@@ -37,7 +35,7 @@ class InputState extends React.Component {
 
   render() {
     return this.props.children({
-      updatePlayer: this.updatePlayer,
+      updateLevel: this.updateLevel,
       updateWorld: this.updateWorld,
       state: this.state
     });

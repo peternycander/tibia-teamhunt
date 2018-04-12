@@ -5,7 +5,6 @@ import Loader from 'components/Loader';
 import {VocationGrid, StyledList, ListWrapper} from './styled';
 import Player from './Player';
 import getShareRange from 'utils/getShareRange';
-import {Consumer as WorldConsumer} from 'contexts/WorldContext';
 
 const getDomPlayerFactory = shareRange => player => (
   <Player key={player.name} shareRange={shareRange} player={player} />
@@ -27,9 +26,9 @@ class PlayerList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {loadPlayers, world} = this.props;
+    const {loadPlayers, level, world} = this.props;
     if (world && prevProps.world !== world) {
-      loadPlayers(world);
+      loadPlayers({world, level});
     }
   }
 
@@ -44,7 +43,7 @@ class PlayerList extends Component {
       return (
         <div>
           <Error>{error}</Error>
-          <TryAgainButton onClick={() => loadPlayers(world)}>
+          <TryAgainButton onClick={() => loadPlayers({world, level})}>
             Try again
           </TryAgainButton>
         </div>
@@ -85,11 +84,7 @@ class PlayerList extends Component {
   }
 }
 
-export default props => (
-  <WorldConsumer>
-    {world => <PlayerList {...props} world={world} />}
-  </WorldConsumer>
-);
+export default PlayerList;
 
 const levelComparatorFactory = ({min, max}) => {
   const level = min + (max - min) / 2;
