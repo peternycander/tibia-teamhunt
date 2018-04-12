@@ -5,7 +5,7 @@ import Loader from 'components/Loader';
 import {VocationGrid, StyledList, ListWrapper} from './styled';
 import Player from './Player';
 import getShareRange from 'utils/getShareRange';
-
+const VOCATIONS = ['druids', 'knights', 'paladins', 'sorcerers'];
 const getDomPlayerFactory = shareRange => player => (
   <Player key={player.name} shareRange={shareRange} player={player} />
 );
@@ -38,7 +38,7 @@ class PlayerList extends Component {
 
   render() {
     const {error, loading, onlineList, loadPlayers, level, world} = this.props;
-
+    const hidden = this.state;
     if (error) {
       return (
         <div>
@@ -50,14 +50,7 @@ class PlayerList extends Component {
       );
     } else if (loading) {
       return <Loader />;
-    } else if (
-      !(
-        onlineList.druids.length ||
-        onlineList.knights.length ||
-        onlineList.paladins.length ||
-        onlineList.sorcerers.length
-      )
-    ) {
+    } else if (VOCATIONS.every(voc => onlineList[voc].length === 0)) {
       return null;
     }
     const shareRange = getShareRange(level);
@@ -65,18 +58,19 @@ class PlayerList extends Component {
     const getDomPlayer = getDomPlayerFactory(shareRange);
     return (
       <VocationGrid>
-        {['druids', 'knights', 'paladins', 'sorcerers'].map(vocation => (
-          <ListWrapper key={vocation} minimized={this.state[vocation]}>
+        {VOCATIONS.map(vocation => (
+          <ListWrapper key={vocation} minimized={hidden[vocation]}>
             <h4 onClick={() => this.toggleMinimized(vocation)}>
-              {vocation.charAt(0).toUpperCase()}
-              {vocation.substring(1)}
+              {`${vocation.charAt(0).toUpperCase()}${vocation.substring(1)}`}
             </h4>
-            <StyledList hide={this.state[vocation]}>
-              {onlineList[vocation]
-                .slice()
-                .sort(levelComparator)
-                .map(getDomPlayer)}
-            </StyledList>
+            {!hidden[vocation] && (
+              <StyledList>
+                {onlineList[vocation]
+                  .slice()
+                  .sort(levelComparator)
+                  .map(getDomPlayer)}
+              </StyledList>
+            )}
           </ListWrapper>
         ))}
       </VocationGrid>
