@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from 'components/Header';
 import WorldPicker from 'components/WorldPicker';
-import TeamBuilder from 'components/TeamBuilder';
+import LevelPicker from 'components/LevelPicker';
 import PlayerList from 'components/PlayerList';
 import styled from 'styled-components';
 import {Provider as WorldProvider} from 'contexts/WorldContext';
@@ -38,7 +38,7 @@ class App extends React.Component {
                         updateWorld={updateWorld}
                         loadPlayers={loadPlayers}
                       />
-                      <TeamBuilder
+                      <LevelPicker
                         updatePlayer={updatePlayer}
                         player={player}
                       />

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {PlayerInput} from './styled';
 
-export default class TeamBuilder extends Component {
+export default class LevelPicker extends Component {
   render() {
     const {updatePlayer, player: {level}} = this.props;
     return (
