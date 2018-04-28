@@ -13,6 +13,11 @@ const defaultState = Object.freeze({
 export default (state = defaultState, action = {type: ''}) =>
   produce(state, draft => {
     switch (action.type) {
+      case 'INIT': {
+        const {world} = action.payload;
+        draft.world = world;
+        return;
+      }
       case 'CHANGE_WORLD': {
         const world = action.payload;
         const validWorld = !!state.map[world.toLowerCase()];

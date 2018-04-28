@@ -9,7 +9,13 @@ import reducer from './reducer';
 import actionsFactory from './actionsFactory';
 
 class WorldPicker extends Component {
-  state = reducer();
+  constructor(props) {
+    super(props);
+    this.state = reducer(undefined, {
+      type: 'INIT',
+      payload: {world: props.selectedWorld}
+    });
+  }
   actions = actionsFactory(action =>
     this.setState(reducer(this.state, action))
   );
