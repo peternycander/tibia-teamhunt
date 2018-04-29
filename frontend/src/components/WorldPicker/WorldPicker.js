@@ -23,12 +23,12 @@ class WorldPicker extends Component {
     this.actions.loadWorlds();
   }
   componentDidUpdate(prevProps, prevState) {
+    const {validWorld, world} = this.state;
     if (
-      prevState.validWorld !== this.state.validWorld &&
-      this.state.validWorld
+      (validWorld !== prevState.validWorld || world !== prevState.world) &&
+      validWorld
     ) {
-      this.props.updateWorld(this.props.selectedWorld);
-      this.props.loadPlayers(this.props.selectedWorld);
+      this.props.updateWorld(world);
     }
   }
   render() {
@@ -47,7 +47,7 @@ class WorldPicker extends Component {
       return <Loader />;
     }
     return (
-      <Wrapper>
+      <Wrapper ref={ref => (this.mounted = ref)}>
         <ReloadButton onClick={() => loadPlayers(selectedWorld)}>
           <ReloadIcon />
         </ReloadButton>

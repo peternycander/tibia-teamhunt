@@ -26,9 +26,9 @@ class PlayerList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {loadPlayers, level, world} = this.props;
+    const {loadPlayers, world} = this.props;
     if (world && prevProps.world !== world) {
-      loadPlayers({world, level});
+      loadPlayers(world);
     }
   }
 
