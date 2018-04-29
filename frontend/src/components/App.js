@@ -6,6 +6,7 @@ import PlayerList from 'components/PlayerList';
 import styled from 'styled-components';
 import InputState from 'components/StateProviders/InputState';
 import OnlineListState from 'components/StateProviders/OnlineListState';
+import GuildBlacklist from './GuildBlacklist';
 
 const Body = styled.div`
   width: 60rem;
@@ -38,6 +39,7 @@ const App = ({
         loadPlayers={loadPlayers}
       />
       <LevelPicker updateLevel={updateLevel} level={level} />
+      {false && <GuildBlacklist world={world} />}
       <PlayerList
         level={level}
         error={error}
