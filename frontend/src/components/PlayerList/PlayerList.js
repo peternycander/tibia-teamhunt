@@ -43,7 +43,7 @@ class PlayerList extends Component {
       return (
         <div>
           <Error>{error}</Error>
-          <TryAgainButton onClick={() => loadPlayers({world, level})}>
+          <TryAgainButton onClick={() => loadPlayers(world)}>
             Try again
           </TryAgainButton>
         </div>
