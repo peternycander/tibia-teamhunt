@@ -11,9 +11,11 @@ export const Player = styled.div.attrs({
   border-radius: 2px;
   margin-bottom: 2px;
   font-size: 11px;
+  min-height: 24px;
   align-items: center;
   position: relative;
-  background-color: ${props => (props.sharable ? colors.highlightGreen : 'inherit')};
+  background-color: ${props =>
+    props.sharable ? colors.highlightGreen : 'inherit'};
   @media (hover: hover) {
     :hover {
       :after,
@@ -78,9 +80,17 @@ export const Player = styled.div.attrs({
 `;
 
 export const PlayerName = styled.a`
-  color: ${({promoted}) => (promoted ? colors.link : colors.freeAccount)};
+  color: ${colors.link};
+  display: flex;
+  align-items: center;
   :hover {
     text-decoration: underline;
+  }
+  svg {
+    width: 11px;
+    height: 11px;
+    fill: ${colors.link};
+    margin-right: 5px;
   }
 `;
 

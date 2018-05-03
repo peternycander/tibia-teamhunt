@@ -1,5 +1,6 @@
 import React from 'react';
 import CopyIcon from './CopyIcon';
+import FreeAccountIcon from './FreeAccountIcon';
 import clipboard from 'clipboard-js';
 import {Player as Wrapper, FullWidth, CopyButton, PlayerName} from './styled';
 
@@ -25,7 +26,13 @@ export default class Player extends React.Component {
       this.setState({showCopied: false});
     }, 2000);
   };
-  shouldComponentUpdate({player: {level}, shareRange}, {showCopied}) {
+  shouldComponentUpdate(
+    {
+      player: {level},
+      shareRange
+    },
+    {showCopied}
+  ) {
     if (showCopied !== this.state.showCopied) {
       return true;
     }
@@ -67,6 +74,7 @@ export default class Player extends React.Component {
               target='_blank'
               promoted={isPromoted}
             >
+              {!isPromoted && <FreeAccountIcon />}
               {player.name}
             </PlayerName>
             <span>{player.level}</span>
