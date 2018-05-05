@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Wrapper} from './styled';
 import reducer from './reducer';
 import actionsFactory from './actionsFactory';
 import Guild from './Guild';
-// addGuildToBlacklist
-// removeGuildFromBlacklist
+
 export default class GuildBlacklist extends Component {
   state = reducer();
   static propTypes = {
@@ -35,7 +33,7 @@ export default class GuildBlacklist extends Component {
       addGuildToBlacklist
     } = this.props;
     return (
-      <Wrapper>
+      <React.Fragment>
         <h2>Guild Blacklist</h2>
         <ul>
           {Object.entries(guilds).map(([guild, guildBlacklisted]) => (
@@ -48,7 +46,7 @@ export default class GuildBlacklist extends Component {
             />
           ))}
         </ul>
-      </Wrapper>
+      </React.Fragment>
     );
   }
 }

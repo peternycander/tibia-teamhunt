@@ -3,36 +3,11 @@ import Header from 'components/Header';
 import WorldPicker from 'components/WorldPicker';
 import LevelPicker from 'components/LevelPicker';
 import PlayerList from 'components/PlayerList';
-import styled from 'styled-components';
 import InputState from 'components/StateProviders/InputState';
 import OnlineListState from 'components/StateProviders/OnlineListState';
 import BlacklistState from 'components/StateProviders/BlacklistState';
 import GuildBlacklist from './GuildBlacklist';
-import media from 'globals/media';
-
-const Body = styled.div`
-  grid-area: body;
-`;
-
-const AppWrapper = styled.div`
-  display: grid;
-  margin-right: 5vw;
-  min-height: 100vh;
-  grid-template-areas:
-    'sidebar header header header header header'
-    'sidebar body body body body body';
-  grid-template-rows: 12vh auto auto;
-  ${media.smallDesktop`
-  margin-left: 5vw;  
-  grid-template-areas:
-    'header header header header header'
-    'body body body body body';
-  `};
-`;
-
-const SubHeader = styled.h3`
-  text-align: center;
-`;
+import {Sidebar, Body, AppWrapper, SubHeader, FeedbackHint} from './styled';
 
 const App = ({
   styled,
@@ -51,12 +26,18 @@ const App = ({
 }) => (
   <AppWrapper>
     <Header>Tibia Teamhunt</Header>
-    <GuildBlacklist
-      world={world}
-      addGuildToBlacklist={addGuildToBlacklist}
-      removeGuildFromBlacklist={removeGuildFromBlacklist}
-      blacklistedGuilds={blacklistedGuilds}
-    />
+    <Sidebar>
+      <FeedbackHint>
+        Psst! I would love feedback at{' '}
+        <a href='mailto:peter.nycander@gmail.com'>peter.nycander@gmail.com</a>
+      </FeedbackHint>
+      <GuildBlacklist
+        world={world}
+        addGuildToBlacklist={addGuildToBlacklist}
+        removeGuildFromBlacklist={removeGuildFromBlacklist}
+        blacklistedGuilds={blacklistedGuilds}
+      />
+    </Sidebar>
     <Body>
       <SubHeader>Pick your world</SubHeader>
       <WorldPicker
