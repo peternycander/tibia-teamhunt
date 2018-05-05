@@ -29,11 +29,15 @@ export default class Player extends React.Component {
   shouldComponentUpdate(
     {
       player: {level},
-      shareRange
+      shareRange,
+      blacklisted
     },
     {showCopied}
   ) {
     if (showCopied !== this.state.showCopied) {
+      return true;
+    }
+    if (blacklisted !== this.props.blacklisted) {
       return true;
     }
     const prevShareRange = this.props.shareRange;
@@ -46,7 +50,7 @@ export default class Player extends React.Component {
     return true;
   }
   render() {
-    const {player, shareRange} = this.props;
+    const {player, shareRange, blacklisted} = this.props;
     const {showCopied} = this.state;
     const isPromoted = promoted(player.vocation);
     return (
@@ -55,6 +59,7 @@ export default class Player extends React.Component {
         sharable={
           player.level >= shareRange.min && player.level <= shareRange.max
         }
+        blacklisted={blacklisted}
         promoted={isPromoted}
       >
         {showCopied ? (

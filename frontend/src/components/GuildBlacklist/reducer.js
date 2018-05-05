@@ -3,7 +3,8 @@ import produce from 'immer';
 const defaultState = Object.freeze({
   guilds: {},
   error: '',
-  loading: false
+  loading: false,
+  guildMembers: {}
 });
 
 export default (state = defaultState, action = {type: ''}) =>

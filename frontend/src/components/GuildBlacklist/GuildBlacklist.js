@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Wrapper, Guild} from './styled';
+import {Wrapper} from './styled';
 import reducer from './reducer';
 import actionsFactory from './actionsFactory';
-
+import Guild from './Guild';
+// addGuildToBlacklist
+// removeGuildFromBlacklist
 export default class GuildBlacklist extends Component {
   state = reducer();
   static propTypes = {
@@ -16,25 +18,36 @@ export default class GuildBlacklist extends Component {
         console.log('action', action) || console.log('state', this.state)
     )
   );
+
   componentDidMount() {
     this.actions.loadGuilds(this.props.world);
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.world !== this.props.world) {
+      this.actions.loadGuilds(this.props.world);
+    }
+  }
   render() {
     const {guilds} = this.state;
+    const {
+      blacklistedGuilds,
+      removeGuildFromBlacklist,
+      addGuildToBlacklist
+    } = this.props;
     return (
       <Wrapper>
         <h2>Guild Blacklist</h2>
-        {Object.entries(guilds).map(([guild, guildBlacklisted]) => (
-          <Guild key={guild}>
-            <input
-              id={guild}
-              type='checkbox'
-              checked={guildBlacklisted}
-              onChange={e => this.actions.toggleGuild(guild, e)}
+        <ul>
+          {Object.entries(guilds).map(([guild, guildBlacklisted]) => (
+            <Guild
+              key={guild}
+              name={guild}
+              blacklistedGuilds={blacklistedGuilds}
+              addGuildToBlacklist={addGuildToBlacklist}
+              removeGuildFromBlacklist={removeGuildFromBlacklist}
             />
-            <label htmlFor={guild}>{guild}</label>
-          </Guild>
-        ))}
+          ))}
+        </ul>
       </Wrapper>
     );
   }

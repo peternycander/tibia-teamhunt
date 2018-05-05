@@ -11,8 +11,11 @@ export const Wrapper = styled.div`
   display: none;
   `};
   background: ${colors.sidebar};
-`;
-
-export const Guild = styled.div`
-  margin-bottom: 5px;
+  ul {
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    margin-bottom: 5px;
+  }
 `;

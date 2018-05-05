@@ -2,7 +2,12 @@ import styled from 'styled-components';
 import colors from 'globals/colors';
 
 export const Player = styled.div.attrs({
-  'data-hint': ({promoted}) => (promoted ? '' : 'Not promoted')
+  'data-hint': ({blacklisted, promoted}) => {
+    if (blacklisted) {
+      return 'Blacklisted';
+    }
+    return promoted ? '' : 'Not promoted';
+  }
 })`
   display: grid;
   grid-template-columns: 15px 1fr 20px;
@@ -14,8 +19,19 @@ export const Player = styled.div.attrs({
   min-height: 24px;
   align-items: center;
   position: relative;
-  background-color: ${props =>
-    props.sharable ? colors.highlightGreen : 'inherit'};
+  color: ${props => (props.blacklisted ? colors.backgroundGray : 'inherit')};
+  a {
+    color: ${props => (props.blacklisted ? colors.backgroundGray : 'inherit')};
+  }
+  svg {
+    fill: ${props => (props.blacklisted ? colors.backgroundGray : 'inherit')};
+  }
+  background-color: ${props => {
+    if (props.blacklisted) {
+      return colors.red;
+    }
+    return props.sharable ? colors.highlightGreen : 'inherit';
+  }};
   @media (hover: hover) {
     :hover {
       :after,
@@ -54,7 +70,8 @@ export const Player = styled.div.attrs({
     position: absolute;
     transform: translateY(8px);
     pointer-events: none;
-    display: ${({promoted}) => (promoted ? 'none' : 'block')}
+    display: ${({promoted, blacklisted}) =>
+      promoted && !blacklisted ? 'none' : 'block'}
   }
   :before {
     content: '';
@@ -75,8 +92,6 @@ export const Player = styled.div.attrs({
     line-height: 12px;
     white-space: nowrap;
   }
-  
-  
 `;
 
 export const PlayerName = styled.a`

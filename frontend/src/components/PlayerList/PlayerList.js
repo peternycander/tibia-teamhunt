@@ -6,8 +6,13 @@ import {VocationGrid, StyledList, ListWrapper} from './styled';
 import Player from './Player';
 import getShareRange from 'utils/getShareRange';
 const VOCATIONS = ['druids', 'knights', 'paladins', 'sorcerers'];
-const getDomPlayerFactory = shareRange => player => (
-  <Player key={player.name} shareRange={shareRange} player={player} />
+const getDomPlayerFactory = shareRange => (player, blacklisted) => (
+  <Player
+    key={player.name}
+    shareRange={shareRange}
+    player={player}
+    blacklisted={blacklisted}
+  />
 );
 class PlayerList extends Component {
   state = {
@@ -37,7 +42,15 @@ class PlayerList extends Component {
   };
 
   render() {
-    const {error, loading, onlineList, loadPlayers, level, world} = this.props;
+    const {
+      error,
+      loading,
+      onlineList,
+      loadPlayers,
+      level,
+      world,
+      blacklist
+    } = this.props;
     const hidden = this.state;
     if (error) {
       return (
@@ -68,7 +81,7 @@ class PlayerList extends Component {
                 {onlineList[vocation]
                   .slice()
                   .sort(levelComparator)
-                  .map(getDomPlayer)}
+                  .map(player => getDomPlayer(player, blacklist[player.name]))}
               </StyledList>
             )}
           </ListWrapper>
