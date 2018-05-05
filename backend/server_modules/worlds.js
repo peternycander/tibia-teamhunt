@@ -15,7 +15,9 @@ module.exports = {
 async function listAll() {
   let response;
   try {
-    response = await fetch('https://secure.tibia.com/community/?subtopic=worlds');
+    response = await fetch(
+      'https://secure.tibia.com/community/?subtopic=worlds'
+    );
     if (!response.ok) {
       throw new Error('Getting worlds resulted in not ok status');
     }
@@ -85,7 +87,9 @@ async function listPlayers(req, res) {
   world = worlds[world];
   let response;
   try {
-    response = await fetch(`https://secure.tibia.com/community/?subtopic=worlds&world=${world}`);
+    response = await fetch(
+      `https://secure.tibia.com/community/?subtopic=worlds&world=${world}`
+    );
     if (!response.ok) {
       console.error(`Getting ${world} resulted in not ok status`);
       return res.status(500).send();
@@ -113,11 +117,15 @@ async function listPlayers(req, res) {
       },
       ontext: function(text) {
         if (inPlayer) {
-          currentPlayer.name = currentPlayer.name ? currentPlayer.name + text : text;
+          currentPlayer.name = currentPlayer.name
+            ? currentPlayer.name + text
+            : text;
         } else if (inLevel) {
           currentPlayer.level = parseInt(text, 10);
         } else if (inVocation) {
-          currentPlayer.vocation = currentPlayer.vocation ? currentPlayer.vocation + text : text;
+          currentPlayer.vocation = currentPlayer.vocation
+            ? currentPlayer.vocation + text
+            : text;
         }
       },
       onclosetag: function(tagname) {
@@ -128,7 +136,7 @@ async function listPlayers(req, res) {
           inLevel = false;
           inVocation = true;
         } else if (inVocation) {
-          inVocation = false; 
+          inVocation = false;
           // eslint-disable-next-line  no-irregular-whitespace
           currentPlayer.name = currentPlayer.name.replace(/ /g, ' ');
           players.push(Object.assign({}, currentPlayer));

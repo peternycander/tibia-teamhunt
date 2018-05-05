@@ -7,11 +7,25 @@ import styled from 'styled-components';
 import InputState from 'components/StateProviders/InputState';
 import OnlineListState from 'components/StateProviders/OnlineListState';
 import GuildBlacklist from './GuildBlacklist';
+import media from 'globals/media';
 
 const Body = styled.div`
-  width: 60rem;
-  max-width: 90vw;
-  margin: 0 auto;
+  grid-area: body;
+`;
+
+const AppWrapper = styled.div`
+  display: grid;
+  margin-right: 5vw;
+  min-height: 100vh;
+  grid-template-areas:
+    'sidebar header header header header header'
+    'sidebar body body body body body';
+  ${media.smallDesktop`
+  margin-left: 5vw;  
+  grid-template-areas:
+    'header header header header header'
+    'body body body body body';
+  `};
 `;
 
 const SubHeader = styled.h3`
@@ -29,8 +43,9 @@ const App = ({
   onlineList,
   loadPlayers
 }) => (
-  <div>
+  <AppWrapper>
     <Header>Tibia Teamhunt</Header>
+    <GuildBlacklist world={world} />
     <Body>
       <SubHeader>Pick your world</SubHeader>
       <WorldPicker
@@ -39,7 +54,6 @@ const App = ({
         loadPlayers={loadPlayers}
       />
       <LevelPicker updateLevel={updateLevel} level={level} />
-      {false && <GuildBlacklist world={world} />}
       <PlayerList
         level={level}
         error={error}
@@ -49,7 +63,7 @@ const App = ({
         loadPlayers={loadPlayers}
       />
     </Body>
-  </div>
+  </AppWrapper>
 );
 
 export default () => (

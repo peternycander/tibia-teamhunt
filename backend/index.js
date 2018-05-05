@@ -13,6 +13,6 @@ app.use(
 const root = __dirname + '/build';
 app.use('/', routes);
 app.use(express.static(root));
-app.use(fallback('index.html', { root }));
+app.use(fallback('index.html', {root}));
 
 app.listen(port, () => console.log(`Server starting on ${port}`));

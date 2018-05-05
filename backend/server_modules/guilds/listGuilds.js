@@ -5,9 +5,6 @@ const moment = require('moment');
 let guildListCache = {};
 let guildListCacheTimeout = moment();
 const nonGuildBoldTexts = ['Logo', 'Description', '&nbsp;'];
-module.exports = {
-  list: listApi,
-};
 
 async function listGuilds(world) {
   let response;
@@ -41,7 +38,7 @@ async function listGuilds(world) {
         if (tagname === 'b') {
           inBoldTag = false;
         }
-      },
+      }
     },
     {decodeEntities: true}
   );
@@ -52,7 +49,7 @@ async function listGuilds(world) {
   return guilds;
 }
 
-async function listApi(req, res) {
+module.exports = async function listApi(req, res) {
   const world = req.query.world;
   if (!world) {
     return res.status(400).send({msg: 'Missing world param'});
@@ -67,4 +64,4 @@ async function listApi(req, res) {
     return res.status(500).send();
   }
   res.send(guilds);
-}
+};

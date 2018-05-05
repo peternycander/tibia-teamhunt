@@ -5,6 +5,7 @@ export default styled.header`
   min-height: 80px;
   max-height: 200px;
   font-style: italic;
+  grid-area: header;
   font-size: 35px;
   display: flex;
   justify-content: center;

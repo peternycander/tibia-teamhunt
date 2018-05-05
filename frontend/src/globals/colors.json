@@ -8,5 +8,6 @@
   "black": "#222222",
   "okGreen": "#369e36",
   "highlightGreen": "rgba(54, 157, 54, 0.12)",
-  "solidGray": "#b5b5b5"
+  "solidGray": "#b5b5b5",
+  "sidebar": "#ebebeb"
 }

@@ -31,7 +31,7 @@ export default (state = defaultState, action = {type: ''}) =>
         return;
       }
       case 'TOGGLE_GUILD': {
-        draft[action.payload] = !draft[action.payload];
+        draft.guilds[action.payload] = !draft.guilds[action.payload];
         return;
       }
       default: {
