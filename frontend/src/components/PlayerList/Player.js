@@ -73,7 +73,7 @@ export default class Player extends React.Component {
               <CopyIcon />
             </CopyButton>
             <PlayerName
-              href={`https://secure.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
+              href={`https://www.tibia.com/community/?subtopic=characters&name=${encodeURIComponent(
                 player.name
               )}`}
               target='_blank'
