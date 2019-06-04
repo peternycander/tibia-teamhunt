@@ -10,7 +10,7 @@ async function listGuildMembers(guild) {
   let response;
   try {
     response = await fetch(
-      `https://secure.tibia.com/community/?subtopic=guilds&page=view&GuildName=${guild}`
+      `https://www.tibia.com/community/?subtopic=guilds&page=view&GuildName=${guild}`
     );
     if (!response.ok) {
       throw new Error('Getting guild members resulted in not ok status');
@@ -26,22 +26,14 @@ async function listGuildMembers(guild) {
   let parser = new htmlparser.Parser(
     {
       onopentag: function(name, attribs) {
-        if (
-          name === 'a' &&
-          attribs.href &&
-          attribs.href.includes('characters&name=')
-        ) {
+        if (name === 'a' && attribs.href && attribs.href.includes('characters&name=')) {
           if (afterInvitedCharacters) {
             return;
           }
           const currentPlayer = attribs.href.split('characters&name=')[1];
           guildMembers.push(currentPlayer.replace(/\+/g, ' '));
         }
-        if (
-          name === 'div' &&
-          attribs.class &&
-          attribs.class.toLowerCase().includes('text')
-        ) {
+        if (name === 'div' && attribs.class && attribs.class.toLowerCase().includes('text')) {
           inHeader = true;
         }
       },

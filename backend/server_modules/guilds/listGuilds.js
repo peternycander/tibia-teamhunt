@@ -9,9 +9,7 @@ const nonGuildBoldTexts = ['Logo', 'Description', '&nbsp;'];
 async function listGuilds(world) {
   let response;
   try {
-    response = await fetch(
-      `https://secure.tibia.com/community/?subtopic=guilds&world=${world}`
-    );
+    response = await fetch(`https://www.tibia.com/community/?subtopic=guilds&world=${world}`);
     if (!response.ok) {
       throw new Error('Getting guilds resulted in not ok status');
     }
