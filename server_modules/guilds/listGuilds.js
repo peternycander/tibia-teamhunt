@@ -6,10 +6,16 @@ let guildListCache = {};
 let guildListCacheTimeout = moment();
 const nonGuildBoldTexts = ['Logo', 'Description', '&nbsp;'];
 
+const formatWorld = world => {
+  const [firstLetter, ...rest] = world.toLowerCase();
+  return `${firstLetter.toUpperCase()}${rest.join('')}`;
+}
+
 async function listGuilds(world) {
   let response;
+  console.log(formatWorld(world))
   try {
-    response = await fetch(`https://www.tibia.com/community/?subtopic=guilds&world=${world}`);
+    response = await fetch(`https://www.tibia.com/community/?subtopic=guilds&world=${formatWorld(world)}`);
     if (!response.ok) {
       throw new Error('Getting guilds resulted in not ok status');
     }
